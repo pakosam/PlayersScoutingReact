@@ -24,6 +24,27 @@ body {
   justify-content: center;
 }
 
+.main-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.add-player-btn {
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  border: none;
+  background-color: #73e86c9c;
+  cursor: pointer;
+}
+
 .list {
   flex: 10;
   display: grid;
