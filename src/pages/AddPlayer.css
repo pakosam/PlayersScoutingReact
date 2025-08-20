@@ -1,0 +1,102 @@
+.add-player {
+  height: 100%;
+  background: linear-gradient(167deg, #f9efe8, transparent);
+}
+
+p {
+  text-align: center;
+}
+
+.form-container {
+  height: inherit;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container .form {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.single-row-of-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.single-row-of-form .name-field {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin-right: 17%;
+}
+
+.single-row-of-form .surname-field,
+.single-row-of-form .club-field {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
+
+.single-row-of-form .birthdate-field {
+  display: flex;
+  flex-direction: column;
+  width: 10%;
+  margin-right: 27%;
+}
+
+.single-row-of-form .birthplace-field {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
+
+.single-row-of-form .height-field {
+  display: flex;
+  flex-direction: column;
+  width: 7%;
+  margin-right: 40%;
+}
+
+.single-row-of-form .foot-field {
+  display: flex;
+  flex-direction: column;
+  width: 10%;
+}
+
+.single-row-of-form .shirt-number-field {
+  display: flex;
+  flex-direction: column;
+  width: 7%;
+  margin-right: 5%;
+}
+
+.single-row-of-form .positions-field {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin-right: 5%;
+}
+
+.input {
+  border: 2px solid #cfad6faa;
+  border-radius: 8px;
+  height: 25px;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+.add-player-button {
+  align-self: center;
+  padding: 15px;
+  border-radius: 15px;
+  border: none;
+  background-color: #73e86c9c;
+  cursor: pointer;
+}
