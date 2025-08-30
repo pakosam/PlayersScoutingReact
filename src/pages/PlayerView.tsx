@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import "./PlayerView.css";
-import { error } from "console";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { OptionIcon } from "../icons/OptionIcon";
 import { useNavigate } from "react-router-dom";
+import { MoreInfoIcon } from "../icons/MoreInfoIcon";
+import { DeleteIcon } from "../icons/DeleteIcon";
 
 interface IPlayers {
   id: number;
@@ -64,6 +65,15 @@ export const PlayerView = () => {
                     Scouting report: {name + " " + surname}
                   </p>
                   <p className="player-info-club">Club: {club}</p>
+                </div>
+
+                <div className="player-hover-icons">
+                  <div className="more-info">
+                    <MoreInfoIcon />
+                  </div>
+                  <div className="delete">
+                    <DeleteIcon />
+                  </div>
                 </div>
               </div>
             );

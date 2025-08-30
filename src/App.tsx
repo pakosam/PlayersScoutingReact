@@ -7,7 +7,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/players" element={<PlayerView />} ></Route>
+        <Route path="/players" element={<PlayerView />} />
         <Route path="/players/add-player" element={<AddPlayer />} />
       </Routes>
     </BrowserRouter>
