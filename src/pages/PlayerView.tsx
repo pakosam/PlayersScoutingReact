@@ -13,7 +13,45 @@ interface IPlayers {
   name: string;
   surname: string;
   club: string;
+  positions: string;
 }
+
+const getPlayerImage = (
+  image: string | undefined,
+  positions?: string
+): string => {
+  if (image) return image;
+
+  const firstPosition = positions?.split(",")[0]?.trim().toLowerCase();
+
+  switch (firstPosition) {
+    case "goalkeeper":
+      return "/assets/goalkeeper.png";
+    case "defender":
+    case "centre back":
+    case "left back":
+    case "right back":
+    case "wingback":
+    case "left wingback":
+    case "right wingback":
+      return "/assets/defender.png";
+    case "midfielder":
+    case "defensive midfielder":
+    case "central midfielder":
+    case "left midfielder":
+    case "right midfielder":
+    case "attacking midfielder":
+      return "/assets/midfielder.png";
+    case "winger":
+    case "left winger":
+    case "right winger":
+    case "forward":
+    case "striker":
+      return "/assets/forward.png";
+    default:
+      return "/assets/default.png";
+  }
+};
 
 export const PlayerView = () => {
   const [players, setPlayers] = useState<IPlayers[]>();
@@ -30,8 +68,28 @@ export const PlayerView = () => {
     navigate("/players/add-player");
   };
 
+  const infoIcon = async (playerId: number) => {
+    navigate(`/players/${playerId}/info`);
+  };
+
+  const deleteIcon = async (playerId: number) => {
+    const response = await fetch(
+      `https://localhost:7066/api/Players?id=${playerId}`,
+      {
+        method: "DELETE",
+      }
+    );
+    setPlayers((prev) => prev?.filter((player) => player.id !== playerId));
+  };
+
   return (
-    <div id="main-menu">
+    <div
+      id="main-menu"
+      style={{
+        backgroundImage:
+          'url("assets/izuddin-helmi-adnan-ndxwXAt0jpg-unsplash.jpg")',
+      }}
+    >
       <div className="header-and-options-button">
         <div>
           <h1>Players Scouting</h1>
@@ -57,7 +115,7 @@ export const PlayerView = () => {
                 <div className="image-container">
                   <img
                     className="player-image"
-                    src={image || "/assets/forward.png"}
+                    src={getPlayerImage(player.image, player.positions)}
                   />
                 </div>
                 <div className="player-info">
@@ -68,10 +126,13 @@ export const PlayerView = () => {
                 </div>
 
                 <div className="player-hover-icons">
-                  <div className="more-info">
+                  <div
+                    className="more-info"
+                    onClick={() => infoIcon(player.id)}
+                  >
                     <MoreInfoIcon />
                   </div>
-                  <div className="delete">
+                  <div className="delete" onClick={() => deleteIcon(player.id)}>
                     <DeleteIcon />
                   </div>
                 </div>

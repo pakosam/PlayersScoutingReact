@@ -66,109 +66,110 @@ export const AddPlayer = () => {
 
   return (
     <div className="add-player">
-      <div>
-        <p>New player</p>
+      <div className="header">
+        <h4>New player</h4>
       </div>
       <div className="form-container">
         <form className="form" onSubmit={addPlayerButton}>
-          <div className="single-row-of-form">
-            <div className="name-field">
-              <label>Name</label>
-              <input
-                type="text"
-                className="input"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
+          <div className="both-form-sections">
+            <div className="form-section">
+              <p className="section-title">Personal Info</p>
+              <div className="name-field">
+                <label>Name</label>
+                <input
+                  type="text"
+                  className="input"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="surname-field">
+                <label>Surname</label>
+                <input
+                  type="text"
+                  className="input"
+                  value={surname}
+                  onChange={(e) => setSurname(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="birthdate-field">
+                <label>Birthdate</label>
+                <input
+                  type="date"
+                  className="input"
+                  value={birthdate}
+                  onChange={(e) => setBirthdate(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="birthplace-field">
+                <label>Birthplace</label>
+                <input
+                  type="text"
+                  className="input"
+                  value={birthplace}
+                  onChange={(e) => setBirthplace(e.target.value)}
+                  required
+                />
+              </div>
             </div>
-            <div className="surname-field">
-              <label>Surname</label>
-              <input
-                type="text"
-                className="input"
-                value={surname}
-                onChange={(e) => setSurname(e.target.value)}
-                required
-              />
+            <div className="form-section">
+              <p className="section-title">Professional Info</p>
+              <div className="height-field">
+                <label>Height</label>
+                <input
+                  type="number"
+                  className="input"
+                  value={height}
+                  onChange={(e) => setHeight(Number(e.target.value))}
+                  required
+                />
+              </div>
+              <div className="foot-field">
+                <label>Foot</label>
+                <input
+                  type="text"
+                  className="input"
+                  value={foot}
+                  onChange={(e) => setFoot(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="shirt-number-field">
+                <label>Shirt number</label>
+                <input
+                  type="number"
+                  className="input"
+                  value={shirtNumber}
+                  onChange={(e) => setShirtNumber(Number(e.target.value))}
+                  required
+                />
+              </div>
+              <div className="positions-field">
+                <label>Positions</label>
+                <input
+                  type="text"
+                  className="input"
+                  value={positions}
+                  onChange={(e) => setPositions(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="club-field">
+                <label>Club</label>
+                <input
+                  type="text"
+                  className="input"
+                  value={club}
+                  onChange={(e) => setClub(e.target.value)}
+                  required
+                />
+              </div>
             </div>
           </div>
-          <div className="single-row-of-form">
-            <div className="birthdate-field">
-              <label>Birthdate</label>
-              <input
-                type="date"
-                className="input"
-                value={birthdate}
-                onChange={(e) => setBirthdate(e.target.value)}
-                required
-              />
-            </div>
-            <div className="birthplace-field">
-              <label>Birthplace</label>
-              <input
-                type="text"
-                className="input"
-                value={birthplace}
-                onChange={(e) => setBirthplace(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-          <div className="single-row-of-form">
-            <div className="height-field">
-              <label>Height</label>
-              <input
-                type="number"
-                className="input"
-                value={height}
-                onChange={(e) => setHeight(Number(e.target.value))}
-                required
-              />
-            </div>
-            <div className="foot-field">
-              <label>Foot</label>
-              <input
-                type="text"
-                className="input"
-                value={foot}
-                onChange={(e) => setFoot(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-          <div className="single-row-of-form">
-            <div className="shirt-number-field">
-              <label>Shirt number</label>
-              <input
-                type="number"
-                className="input"
-                value={shirtNumber}
-                onChange={(e) => setShirtNumber(Number(e.target.value))}
-                required
-              />
-            </div>
-            <div className="positions-field">
-              <label>Positions</label>
-              <input
-                type="text"
-                className="input"
-                value={positions}
-                onChange={(e) => setPositions(e.target.value)}
-                required
-              />
-            </div>
-            <div className="club-field">
-              <label>Club</label>
-              <input
-                type="text"
-                className="input"
-                value={club}
-                onChange={(e) => setClub(e.target.value)}
-                required
-              />
-            </div>
-          </div>
+
           <button type="submit" className="add-player-button">
             Add player
           </button>

@@ -1,8 +1,15 @@
-/* Main layout */
-#main-menu {
+body {
   height: 100%;
+}
+
+#main-menu {
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  padding: 10px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .header-and-options-button {
@@ -23,6 +30,7 @@
 .main-content {
   display: flex;
   flex-direction: column;
+  flex: 10;
 }
 
 .btn-container {
@@ -41,12 +49,13 @@
   cursor: pointer;
 }
 
-/* Player list layout */
 .list {
-  flex: 10;
+  flex: 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+  overflow-y: auto;
+  padding-bottom: 10px;
 }
 
 .list .player {
@@ -54,81 +63,73 @@
   border: outset;
   background-color: cornsilk;
   cursor: pointer;
-  position: relative; /* for overlay & icons */
-  overflow: hidden; /* keeps overlay/icons inside */
+
+  overflow: hidden;
   transition: all 0.3s ease;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
 }
 
-/* Overlay using pseudo-element */
+.player-image {
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+
 .list .player::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0); /* starts transparent */
+  background-color: rgba(0, 0, 0, 0);
   transition: background-color 0.3s ease;
-  z-index: 1; /* under content */
+  z-index: 1;
 }
 
-/* Black overlay on hover */
 .list .player:hover::before {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-/* Player image */
-.image-container {
-  justify-self: center;
-  background-color: transparent;
-}
-
-.player-image {
-  height: 100%;
-  width: 100%;
-  position: relative;
-  z-index: 2; /* above overlay */
-  transition: opacity 0.3s ease;
-}
-
-/* Dim image on hover */
-.list .player:hover .player-image {
-  opacity: 0.2;
-}
-
-/* Player info */
 .list .player .player-info {
   padding: 10px;
   justify-items: center;
-  color: #997ad2; /* fully visible purple */
+  color: #997ad2;
   font-weight: 700;
   position: relative;
-  z-index: 2; /* above overlay */
+  z-index: 2;
   transition: color 0.3s ease;
 }
 
-.list .player .player-info .player-info-fullname {
+.player-info .player-info-fullname {
   margin: 0;
   padding-top: 10px;
   font-size: 20px;
 }
 
-.list .player .player-info .player-info-club {
+.player-info .player-info-club {
   margin-bottom: 0;
   padding-bottom: 10px;
   font-size: 20px;
 }
 
-/* Dim text on hover without changing hue */
 .list .player:hover .player-info {
   color: rgba(153, 122, 210, 0.2);
 }
 
 .player-hover-icons {
-  position: absolute; /* position relative to .player */
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 5; /* above overlay & content */
+  z-index: 5;
 }
 
 .player-hover-icons .more-info {
@@ -158,4 +159,16 @@
 .list .player:hover .player-hover-icons .delete {
   opacity: 1;
   pointer-events: auto;
+}
+
+@media (max-width: 900px) {
+  .list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .list {
+    grid-template-columns: 1fr;
+  }
 }
