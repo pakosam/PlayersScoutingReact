@@ -70,7 +70,7 @@ h4 {
   flex-direction: column;
 }
 
-.input {
+input {
   border: 2px solid #cfad6faa;
   border-radius: 8px;
   height: 25px;

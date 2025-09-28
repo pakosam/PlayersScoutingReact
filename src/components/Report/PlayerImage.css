@@ -1,0 +1,10 @@
+.report-container .player-name-and-surname .image-container {
+  height: 100%;
+  align-content: center;
+  margin-left: 90px;
+}
+
+.report-container .player-name-and-surname .image-container .player-image {
+  height: 100px;
+  filter: brightness(0) invert(1);
+}
