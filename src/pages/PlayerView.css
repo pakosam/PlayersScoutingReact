@@ -1,9 +1,4 @@
-body {
-  height: 100%;
-}
-
 #main-menu {
-  height: 100vh;
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -45,13 +40,9 @@ body {
   width: 50px;
   border-radius: 25px;
   border: none;
-  background-color: #73e86c9c;
+  background-color: #74ff79;
   cursor: pointer;
 }
-
-
-
-
 
 @media (max-width: 900px) {
   .list {

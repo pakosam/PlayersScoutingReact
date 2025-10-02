@@ -8,11 +8,13 @@ import { OptionIcon } from "../icons/OptionIcon";
 import { PlayerList } from "../components/PlayerView/PlayerList";
 import { IPlayers } from "../api/apiInterface";
 import { playerRepository } from "../repositories/playerRepository";
+import { ConfirmModal } from "../components/PlayerView/ConfirmModal";
 
 export const PlayerView = () => {
   const [players, setPlayers] = useState<IPlayers[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [playerToDelete, setPlayerToDelete] = useState<IPlayers | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,14 +33,24 @@ export const PlayerView = () => {
   const addPlayerButton = () => navigate("/players/add-player");
   const infoIcon = (id: number) => navigate(`/players/${id}/info`);
 
-  const deleteIcon = async (id: number) => {
+  const requestDelete = (id: number) => {
+    const player = players.find((p) => p.id === id);
+    if (player) setPlayerToDelete(player);
+  };
+
+  const confirmDelete = async () => {
+    if (!playerToDelete) return;
+
     try {
-      await playerRepository.delete(id);
-      setPlayers((prev) => prev.filter((p) => p.id !== id));
+      await playerRepository.delete(playerToDelete.id);
+      setPlayers((prev) => prev.filter((p) => p.id !== playerToDelete.id));
+      setPlayerToDelete(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to delete player");
     }
   };
+
+  const cancelDelete = () => setPlayerToDelete(null);
 
   return (
     <div
@@ -68,9 +80,21 @@ export const PlayerView = () => {
         {error && <p style={{ color: "red" }}>{error}</p>}
 
         {!loading && !error && (
-          <PlayerList players={players} onInfo={infoIcon} onDelete={deleteIcon} />
+          <PlayerList
+            players={players}
+            onInfo={infoIcon}
+            onDelete={requestDelete}
+          />
         )}
       </div>
+
+      <ConfirmModal
+        isOpen={playerToDelete !== null}
+        title="Delete Player"
+        message={`Are you sure you want to delete ${playerToDelete?.name} ${playerToDelete?.surname}?`}
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+      />
     </div>
   );
 };

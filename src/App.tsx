@@ -1,20 +1,36 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 import { PlayerView } from "./pages/PlayerView";
 import { AddPlayer } from "./pages/AddPlayer";
 import { Report } from "./pages/Report";
 import "./App.css";
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const rootClass =
+    location.pathname === "/players" ? "root-playerview" : "root-default";
+
   return (
-    <BrowserRouter>
+    <div id="root" className={rootClass}>
       <Routes>
         <Route path="/" element={<Navigate to="/players" replace />} />
         <Route path="/players" element={<PlayerView />} />
         <Route path="/players/add-player" element={<AddPlayer />} />
         <Route path="/players/:playerId/info" element={<Report />} />
       </Routes>
-    </BrowserRouter>
+    </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  );
+}
