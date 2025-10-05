@@ -9,6 +9,7 @@ import { PlayerView } from "./pages/PlayerView";
 import { AddPlayer } from "./pages/AddPlayer";
 import { Report } from "./pages/Report";
 import "./App.css";
+import { FullReport } from "./pages/FullReport";
 
 function AppContent() {
   const location = useLocation();
@@ -22,6 +23,7 @@ function AppContent() {
         <Route path="/players" element={<PlayerView />} />
         <Route path="/players/add-player" element={<AddPlayer />} />
         <Route path="/players/:playerId/info" element={<Report />} />
+        <Route path="/players/:playerId/full-report" element={<FullReport />} />
       </Routes>
     </div>
   );
