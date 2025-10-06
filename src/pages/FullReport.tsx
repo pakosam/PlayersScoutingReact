@@ -16,6 +16,8 @@ import { ShirtIcon } from "../icons/ShirtIcon";
 import { formatDate } from "../utilities/formatDate";
 import { parsePositions } from "../utilities/parsePositions";
 import { getDotPosition } from "../components/FullReport/getDotByPosition";
+import { PenModifyIcon } from "../icons/PenModifyIcon";
+import { TrashCanIcon } from "../icons/TrashCanIcon";
 
 export const FullReport = () => {
   const { playerId } = useParams<{ playerId: string }>();
@@ -96,6 +98,10 @@ export const FullReport = () => {
                   </div>
                   <div>Current club: {player.club}</div>
                 </div>
+
+                <div className="edit-icon">
+                  <PenModifyIcon />
+                </div>
               </div>
               <div className="positions-display">
                 <div className="field-image">
@@ -121,10 +127,20 @@ export const FullReport = () => {
 
               <div className="ratings-showcase">
                 {rating ? (
-                  <HexagonRatingsChart
-                    ratings={rating}
-                    playerName={`${player?.name} ${player?.surname}`}
-                  />
+                  <>
+                    <HexagonRatingsChart
+                      ratings={rating}
+                      playerName={`${player?.name} ${player?.surname}`}
+                    />
+                    <div className="ratings-hover-icons">
+                      <div className="edit-icon">
+                        <PenModifyIcon />
+                      </div>
+                      <div className="trash-can-icon">
+                        <TrashCanIcon />
+                      </div>
+                    </div>
+                  </>
                 ) : (
                   <p>No ratings data available</p>
                 )}
@@ -135,6 +151,9 @@ export const FullReport = () => {
           )}
         </div>
         <div className="stats">
+          <div className="header">
+            <h3>STATS</h3>
+          </div>
           <div className="table-container">
             <table>
               <tr>
@@ -143,7 +162,6 @@ export const FullReport = () => {
                 <th>Matches Played</th>
                 <th>Goals</th>
                 <th>Assists</th>
-                <th></th>
                 <th></th>
               </tr>
               {stats?.map((stat, index) => {
@@ -155,6 +173,12 @@ export const FullReport = () => {
                     <td>{matchesPlayed}</td>
                     <td>{goals}</td>
                     <td>{assists}</td>
+                    <td>
+                      <div className="table-cell-icons">
+                        <PenModifyIcon />
+                        <TrashCanIcon />
+                      </div>
+                    </td>
                   </tr>
                 );
               })}
