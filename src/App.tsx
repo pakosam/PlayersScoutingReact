@@ -10,6 +10,7 @@ import { AddPlayer } from "./pages/AddPlayer";
 import { Report } from "./pages/Report";
 import "./App.css";
 import { FullReport } from "./pages/FullReport";
+import { UpdatePlayer } from "./pages/UpdatePlayer";
 
 function AppContent() {
   const location = useLocation();
@@ -24,6 +25,7 @@ function AppContent() {
         <Route path="/players/add-player" element={<AddPlayer />} />
         <Route path="/players/:playerId/info" element={<Report />} />
         <Route path="/players/:playerId/full-report" element={<FullReport />} />
+        <Route path="/players/:playerId/update-player" element={<UpdatePlayer />} />
       </Routes>
     </div>
   );
