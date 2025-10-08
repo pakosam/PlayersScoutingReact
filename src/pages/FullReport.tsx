@@ -19,6 +19,9 @@ import { getDotPosition } from "../components/FullReport/getDotByPosition";
 import { PenModifyIcon } from "../icons/PenModifyIcon";
 import { TrashCanIcon } from "../icons/TrashCanIcon";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
 
 export const FullReport = () => {
   const { playerId } = useParams<{ playerId: string }>();
@@ -33,15 +36,12 @@ export const FullReport = () => {
     const load = async () => {
       try {
         const player = await playerRepository.getSinglePlayer(playerId);
-        console.log("Player data: ", player);
         setPlayer(player);
 
         const rating = await ratingRepository.getRatingByPlayerId(playerId);
-        console.log("Ratings data: ", rating);
         setRating(rating);
 
         const stat = await statRepository.getStatByPlayerId(playerId);
-        console.log("Stats data: ", stat);
         setStats(stat);
       } catch (err) {
         console.error(err);
@@ -55,6 +55,13 @@ export const FullReport = () => {
     if (!playerId) return;
     navigate(`/players/${playerId}/update-player`);
   };
+
+  const addRatingsButton = () => {
+    if (!playerId) return;
+    navigate(`/players/${playerId}/add-ratings`);
+  };
+
+  if (!player) return <p>Loading player...</p>;
 
   return (
     <div className="full-report-container">
@@ -149,7 +156,17 @@ export const FullReport = () => {
                     </div>
                   </>
                 ) : (
-                  <p>No ratings data available</p>
+                  <div className="add-ratings-container">
+                    <p>Add player's ratings</p>
+                    <div className="btn-container">
+                      <button
+                        className="add-player-btn"
+                        onClick={addRatingsButton}
+                      >
+                        <FontAwesomeIcon icon={faPlus} />
+                      </button>
+                    </div>
+                  </div>
                 )}
               </div>
             </>
