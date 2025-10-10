@@ -22,11 +22,11 @@ export const AddRatings = () => {
     const fetchPlayer = async () => {
       try {
         const player = await playerRepository.getSinglePlayer(playerId);
-        if (player.name && player.surname) {
+        if (player) {
           setFullName(`${player.name} ${player.surname}`);
         }
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Error fetching player:", error);
       }
     };
 
@@ -38,6 +38,7 @@ export const AddRatings = () => {
 
     try {
       const newRatings = await ratingRepository.addRatings({
+        playerId: Number(playerId),
         attack,
         defense,
         tactics,

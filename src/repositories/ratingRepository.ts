@@ -17,11 +17,21 @@ export const ratingRepository = {
     const response = await fetch(`${url}/Ratings`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(ratings),
+      body: JSON.stringify({
+        ...ratings,
+        player_id: ratings.playerId,
+      }),
     });
     if (!response.ok) throw new Error("Failed to add ratings");
 
     const data: IRatings = await response.json();
     return data;
+  },
+
+  delete: async (id: number): Promise<void> => {
+    const response = await fetch(`${url}/Ratings?id=${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) throw new Error("Failed to delete rating");
   },
 };

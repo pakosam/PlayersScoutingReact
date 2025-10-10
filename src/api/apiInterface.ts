@@ -24,7 +24,7 @@ export interface IAddPlayer {
 }
 
 export interface IUpdatePlayer {
-  id: number
+  id: number;
   name: string;
   surname: string;
   birthdate: string;
@@ -45,7 +45,7 @@ export interface IPlayer {
   birthplace: string;
   height: number;
   foot: string;
-  shirtNumber: number
+  shirtNumber: number;
   positions: string;
   club: string;
 }
@@ -62,6 +62,7 @@ export interface IRatings {
 }
 
 export interface IAddRatings {
+  playerId: number;
   attack: number;
   defense: number;
   tactics: number;

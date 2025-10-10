@@ -21,13 +21,14 @@ import { TrashCanIcon } from "../icons/TrashCanIcon";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-
+import { ConfirmModal } from "../components/PlayerView/ConfirmModal";
 
 export const FullReport = () => {
   const { playerId } = useParams<{ playerId: string }>();
   const [player, setPlayer] = useState<IPlayer | null>(null);
   const [rating, setRating] = useState<IRatings | null>(null);
   const [stats, setStats] = useState<IStats[]>();
+  const [ratingToDelete, setRatingToDelete] = useState<number | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,6 +60,26 @@ export const FullReport = () => {
   const addRatingsButton = () => {
     if (!playerId) return;
     navigate(`/players/${playerId}/add-ratings`);
+  };
+
+  const requestDelete = (id: number) => {
+    setRatingToDelete(id);
+  };
+
+  const confirmDelete = async () => {
+    if (ratingToDelete === null) return;
+
+    try {
+      await ratingRepository.delete(ratingToDelete);
+      setRating(null);
+      setRatingToDelete(null);
+    } catch (err) {
+      console.error("Failed to delete rating:", err);
+    }
+  };
+
+  const cancelDelete = () => {
+    setRatingToDelete(null);
   };
 
   if (!player) return <p>Loading player...</p>;
@@ -150,7 +171,10 @@ export const FullReport = () => {
                       <div className="edit-icon">
                         <PenModifyIcon />
                       </div>
-                      <div className="trash-can-icon">
+                      <div
+                        className="trash-can-icon"
+                        onClick={() => requestDelete(player.id)}
+                      >
                         <TrashCanIcon />
                       </div>
                     </div>
@@ -213,6 +237,13 @@ export const FullReport = () => {
           <a>Report by</a>
         </div>
       </div>
+      <ConfirmModal
+        isOpen={ratingToDelete !== null}
+        title="Delete Rating"
+        message={`Are you sure you want to delete this player's rating?`}
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+      />
     </div>
   );
 };
