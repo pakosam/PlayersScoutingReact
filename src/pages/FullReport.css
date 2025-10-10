@@ -162,8 +162,47 @@
   align-items: center;
 }
 
+.add-ratings-container .btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.add-ratings-container .btn-container .add-ratings-btn {
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  border: none;
+  background-color: #74ff79;
+  cursor: pointer;
+}
+
 .stats .header h3 {
   margin-left: 20px;
+}
+
+.header-and-button-wrapped {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stats .btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.stats .btn-container .add-stats-btn {
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  border: none;
+  background-color: #74ff79;
+  cursor: pointer;
 }
 
 .table-container {

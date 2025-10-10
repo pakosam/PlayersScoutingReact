@@ -103,6 +103,7 @@ export interface IStats {
 }
 
 export interface IAddStats {
+  playerId: number;
   season: string;
   club: string;
   matchesPlayed: number;

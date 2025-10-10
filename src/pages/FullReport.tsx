@@ -67,6 +67,11 @@ export const FullReport = () => {
     navigate(`/players/${playerId}/update-ratings`);
   };
 
+  const addStatsButton = () => {
+    if (!playerId) return;
+    navigate(`/players/${playerId}/add-stats`);
+  }
+
   const requestDelete = (id: number) => {
     setRatingToDelete(id);
   };
@@ -192,7 +197,7 @@ export const FullReport = () => {
                     <p>Add player's ratings</p>
                     <div className="btn-container">
                       <button
-                        className="add-player-btn"
+                        className="add-ratings-btn"
                         onClick={addRatingsButton}
                       >
                         <FontAwesomeIcon icon={faPlus} />
@@ -208,7 +213,14 @@ export const FullReport = () => {
         </div>
         <div className="stats">
           <div className="header">
-            <h3>STATS</h3>
+            <div className="header-and-button-wrapped">
+              <h3>STATS</h3>
+              <div className="btn-container">
+                <button className="add-stats-btn" onClick={addStatsButton}>
+                  <FontAwesomeIcon icon={faPlus} />
+                </button>
+              </div>
+            </div>
           </div>
           <div className="table-container">
             <table>
