@@ -1,4 +1,9 @@
-import { IAddRatings, IPlayers, IRatings } from "../api/apiInterface";
+import {
+  IAddRatings,
+  IPlayers,
+  IRatings,
+  IUpdateRatings,
+} from "../api/apiInterface";
 
 const url = "https://localhost:7066/api";
 
@@ -16,6 +21,21 @@ export const ratingRepository = {
   addRatings: async (ratings: IAddRatings): Promise<IRatings> => {
     const response = await fetch(`${url}/Ratings`, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...ratings,
+        player_id: ratings.playerId,
+      }),
+    });
+    if (!response.ok) throw new Error("Failed to add ratings");
+
+    const data: IRatings = await response.json();
+    return data;
+  },
+
+  updateRatings: async (ratings: IUpdateRatings): Promise<IRatings> => {
+    const response = await fetch(`${url}/Ratings`, {
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...ratings,

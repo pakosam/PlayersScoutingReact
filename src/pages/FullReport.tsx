@@ -62,6 +62,11 @@ export const FullReport = () => {
     navigate(`/players/${playerId}/add-ratings`);
   };
 
+  const updateRatingButton = () => {
+    if (!playerId) return;
+    navigate(`/players/${playerId}/update-ratings`);
+  };
+
   const requestDelete = (id: number) => {
     setRatingToDelete(id);
   };
@@ -168,7 +173,10 @@ export const FullReport = () => {
                       playerName={`${player?.name} ${player?.surname}`}
                     />
                     <div className="ratings-hover-icons">
-                      <div className="edit-icon">
+                      <div
+                        className="edit-icon"
+                        onClick={() => updateRatingButton()}
+                      >
                         <PenModifyIcon />
                       </div>
                       <div

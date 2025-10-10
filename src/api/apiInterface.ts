@@ -72,6 +72,18 @@ export interface IAddRatings {
   fullName: string;
 }
 
+export interface IUpdateRatings {
+  playerId: number;
+  id: number
+  attack: number;
+  defense: number;
+  tactics: number;
+  technique: number;
+  physicalStrength: number;
+  mentalStrength: number;
+  fullName: string;
+}
+
 export interface ConfirmModalProps {
   isOpen: boolean;
   title?: string;
