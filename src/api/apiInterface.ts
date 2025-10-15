@@ -111,3 +111,14 @@ export interface IAddStats {
   assists: number;
   fullName: string;
 }
+
+export interface IUpdateStats {
+  playerId: number;
+  id: number;
+  season: string;
+  club: string;
+  matchesPlayed: number;
+  goals: number;
+  assists: number;
+  fullName: string;
+}

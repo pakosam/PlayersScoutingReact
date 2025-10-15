@@ -1,6 +1,13 @@
-export const TrashCanIcon = () => {
+import React from "react";
+
+interface TrashCanIconProps {
+  onClick?: () => void;
+}
+
+export const TrashCanIcon: React.FC<TrashCanIconProps> = ({ onClick }) => {
   return (
     <svg
+      onClick={onClick}
       width="40px"
       height="40px"
       viewBox="0 0 1024 1024"

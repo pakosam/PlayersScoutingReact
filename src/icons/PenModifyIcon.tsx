@@ -1,6 +1,13 @@
-export const PenModifyIcon = () => {
+import React from "react";
+
+interface PenModifyIconProps {
+  onClick?: () => void;
+}
+
+export const PenModifyIcon: React.FC<PenModifyIconProps> = ({ onClick }) => {
   return (
     <svg
+      onClick={onClick}
       fill="#000000"
       version="1.1"
       id="Capa_1"

@@ -1,4 +1,4 @@
-import { IAddStats, IStats } from "../api/apiInterface";
+import { IAddStats, IStats, IUpdateStats } from "../api/apiInterface";
 
 const url = "https://localhost:7066/api";
 
@@ -24,5 +24,27 @@ export const statRepository = {
 
     const data: IStats = await response.json();
     return data;
+  },
+
+  updateStats: async (stats: IUpdateStats): Promise<IStats> => {
+    const response = await fetch(`${url}/Stats`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...stats,
+        player_id: stats.playerId,
+      }),
+    });
+    if (!response.ok) throw new Error("Failed to update stats");
+
+    const data: IStats = await response.json();
+    return data;
+  },
+
+  delete: async (id: number): Promise<void> => {
+    const response = await fetch(`${url}/Stats?id=${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) throw new Error("Failed to delete stats");
   },
 };
