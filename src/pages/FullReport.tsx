@@ -18,12 +18,14 @@ import { parsePositions } from "../utilities/parsePositions";
 import { getDotPosition } from "../components/FullReport/getDotByPosition";
 import { PenModifyIcon } from "../icons/PenModifyIcon";
 import { TrashCanIcon } from "../icons/TrashCanIcon";
+import { useNavigate } from "react-router-dom";
 
 export const FullReport = () => {
   const { playerId } = useParams<{ playerId: string }>();
   const [player, setPlayer] = useState<IPlayer | null>(null);
   const [rating, setRating] = useState<IRatings | null>(null);
   const [stats, setStats] = useState<IStats[]>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!playerId) return;
@@ -49,6 +51,11 @@ export const FullReport = () => {
     load();
   }, [playerId]);
 
+  const updatePlayerButton = () => {
+    if (!playerId) return;
+    navigate(`/players/${playerId}/update-player`);
+  };
+
   return (
     <div className="full-report-container">
       <div className="header">
@@ -58,7 +65,7 @@ export const FullReport = () => {
         <div className="player-infos">
           {player ? (
             <>
-              <div className="personal-infos">
+              <div className="personal-infos" onClick={updatePlayerButton}>
                 <div className="image-container">
                   <img
                     className="player-image"

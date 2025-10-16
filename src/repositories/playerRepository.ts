@@ -25,9 +25,19 @@ export const playerRepository = {
     const response = await fetch(`${url}/Players`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(player),
+      body: JSON.stringify(player)
     });
     if (!response.ok) throw new Error(`Failed to create player: ${response.status}`);
     return response.json();
   },
+
+  update: async (player: Omit<IPlayers, "id">): Promise<IPlayers> => {
+    const response = await fetch(`${url}/Players`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(player)
+    });
+    if (!response.ok) throw new Error(`Failed to update player: ${response.status}`);
+    return response.json();
+  }
 };

@@ -23,6 +23,19 @@ export interface IAddPlayer {
   club: string;
 }
 
+export interface IUpdatePlayer {
+  id: number
+  name: string;
+  surname: string;
+  birthdate: string;
+  birthplace: string;
+  height: number;
+  foot: string;
+  shirtNumber: number;
+  positions: string;
+  club: string;
+}
+
 export interface IPlayer {
   id: number;
   image?: string;
