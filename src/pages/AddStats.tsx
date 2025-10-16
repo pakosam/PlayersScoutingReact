@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./AddStats.css";
 import { playerRepository } from "../repositories/playerRepository";
 import { useEffect } from "react";
@@ -11,26 +11,10 @@ export const AddStats = () => {
   const [matchesPlayed, setMatchesPlayed] = useState(0);
   const [goals, setGoals] = useState(0);
   const [assists, setAssists] = useState(0);
-  const [fullName, setFullName] = useState("");
   const navigate = useNavigate();
   const { playerId } = useParams<{ playerId: string }>();
-
-  useEffect(() => {
-    if (!playerId) return;
-
-    const fetchPlayer = async () => {
-      try {
-        const player = await playerRepository.getSinglePlayer(playerId);
-        if (player) {
-          setFullName(`${player.name} ${player.surname}`);
-        }
-      } catch (error) {
-        console.error("Error fetching player:", error);
-      }
-    };
-
-    fetchPlayer();
-  }, [playerId]);
+  const location = useLocation();
+  const { fullName } = location.state || { fullName: "" };
 
   const submitBtn = async (event: FormEvent) => {
     event.preventDefault();

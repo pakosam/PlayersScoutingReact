@@ -1,8 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { IPlayer, IStats } from "../api/apiInterface";
-import { IRatings } from "../api/apiInterface";
-import { useEffect } from "react";
+import { IStats } from "../api/apiInterface";
 import { playerRepository } from "../repositories/playerRepository";
 import { ratingRepository } from "../repositories/ratingRepository";
 import "./FullReport.css";
@@ -12,102 +10,99 @@ import { ConfirmModal } from "../components/PlayerView/ConfirmModal";
 import { EditStatModal } from "../components/PlayerView/EditStatModal";
 import { PlayerInfos } from "../components/FullReport/PlayerInfos";
 import { StatsSection } from "../components/FullReport/StatsSection";
+import { usePlayerData } from "../api/usePlayerData";
 
 export const FullReport = () => {
   const { playerId } = useParams<{ playerId: string }>();
-  const [player, setPlayer] = useState<IPlayer | null>(null);
-  const [rating, setRating] = useState<IRatings | null>(null);
-  const [stats, setStats] = useState<IStats[]>();
-  const [ratingToDelete, setRatingToDelete] = useState<number | null>(null);
-  const [statToDelete, setStatToDelete] = useState<number | null>(null);
+  const { player, rating, stats, setStats } = usePlayerData(playerId);
+  const [showRatingModal, setShowRatingModal] = useState(false);
+  const [showStatsModal, setShowStatsModal] = useState(false);
+  const [editingStat, setEditingStat] = useState<IStats | null>(null);
   const navigate = useNavigate();
 
-  const [editingStat, setEditingStat] = useState<IStats | null>(null);
-
-  useEffect(() => {
+  const navigateTo = (
+    action: "update-player" | "add-ratings" | "update-ratings" | "add-stats"
+  ) => {
     if (!playerId) return;
 
-    const load = async () => {
-      try {
-        const player = await playerRepository.getSinglePlayer(playerId);
-        setPlayer(player);
+    let path = `/players/${playerId}`;
 
-        const rating = await ratingRepository.getRatingByPlayerId(playerId);
-        setRating(rating);
+    switch (action) {
+      case "update-player":
+        path += "/update-player";
+        break;
+      case "add-ratings":
+        path += "/add-ratings";
+        break;
+      case "update-ratings":
+        path += "/update-ratings";
+        break;
+      case "add-stats":
+        path += "/add-stats";
+        break;
+    }
 
-        const stat = await statRepository.getStatByPlayerId(playerId);
-        setStats(stat);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    load();
-  }, [playerId]);
-
-  const updatePlayerButton = () => {
-    if (!playerId) return;
-    navigate(`/players/${playerId}/update-player`);
+    if (action === "add-stats" && player) {
+      navigate(path, {
+        state: { fullName: `${player.name} ${player.surname}` },
+      });
+    } else {
+      navigate(path);
+    }
   };
 
-  const addRatingsButton = () => {
-    if (!playerId) return;
-    navigate(`/players/${playerId}/add-ratings`);
-  };
-
-  const updateRatingButton = () => {
-    if (!playerId) return;
-    navigate(`/players/${playerId}/update-ratings`);
-  };
-
-  const addStatsButton = () => {
-    if (!playerId) return;
-    navigate(`/players/${playerId}/add-stats`);
-  };
-
-  const requestRatingsDelete = (id: number) => {
-    setRatingToDelete(id);
-  };
+  const requestRatingsDelete = () => setShowRatingModal(true);
+  const cancelRatingsDelete = () => setShowRatingModal(false);
 
   const confirmRatingsDelete = async () => {
-    if (ratingToDelete === null) return;
+    if (!playerId) return;
 
     try {
-      await ratingRepository.delete(ratingToDelete);
-      setRating(null);
-      setRatingToDelete(null);
+      await ratingRepository.delete(Number(playerId));
+      setShowRatingModal(false);
     } catch (err) {
       console.error("Failed to delete rating:", err);
     }
   };
 
-  const cancelRatingsDelete = () => {
-    setRatingToDelete(null);
-  };
+  const requestStatsDelete = () => setShowStatsModal(true);
+  const cancelStatsDelete = () => setShowStatsModal(false);
 
-  const requestStatsDelete = (id: number) => {
-    setStatToDelete(id);
-  };
-
-  const confirmStatsDelete = async () => {
-    if (statToDelete === null) return;
-
+  const confirmStatsDelete = async (id: number) => {
     try {
-      await statRepository.delete(statToDelete);
-      setStats((prevStats) =>
-        prevStats?.filter((stat) => stat.id !== statToDelete)
+      await statRepository.delete(id);
+      setStats(
+        (prevStats) => prevStats?.filter((stats) => stats.id !== id) || []
       );
-      setStatToDelete(null);
+      setShowStatsModal(false);
     } catch (err) {
       console.error("Failed to delete stats:", err);
     }
   };
 
-  const cancelStatsDelete = () => {
-    setStatToDelete(null);
-  };
+  const editStatModal = () => {
+    if (!editingStat || !playerId) return null;
 
-  const startEditStat = (stat: IStats) => setEditingStat(stat);
+    const handleSave = async (updatedStat: IStats) => {
+      setEditingStat(null);
+      const player = await playerRepository.getSinglePlayer(playerId);
+      const fullName = `${player.name} ${player.surname}`;
+      const updatePayload = { ...updatedStat, fullName };
+      await statRepository.updateStats(updatePayload);
+      const refreshed = await statRepository.getStatByPlayerId(playerId);
+      setStats(refreshed);
+    };
+
+    const handleCancel = () => setEditingStat(null);
+
+    return (
+      <EditStatModal
+        stat={editingStat}
+        onSave={handleSave}
+        onCancel={handleCancel}
+      />
+    );
+  };
 
   if (!player) return <p>Loading player...</p>;
 
@@ -120,50 +115,34 @@ export const FullReport = () => {
         <PlayerInfos
           player={player}
           rating={rating}
-          onUpdatePlayer={updatePlayerButton}
-          onAddRatings={addRatingsButton}
-          onUpdateRating={updateRatingButton}
-          onDeleteRating={() => requestRatingsDelete(player.id)}
+          onUpdatePlayer={() => navigateTo("update-player")}
+          onAddRatings={() => navigateTo("add-ratings")}
+          onUpdateRating={() => navigateTo("update-ratings")}
+          onDeleteRating={requestRatingsDelete}
         />
         <StatsSection
           stats={stats || []}
-          onAddStats={addStatsButton}
-          onEditStat={startEditStat}
+          onAddStats={() => navigateTo("add-stats")}
+          onEditStat={setEditingStat}
           onDeleteStat={requestStatsDelete}
         />
-        {editingStat && (
-          <EditStatModal
-            stat={editingStat}
-            onSave={async (updatedStat) => {
-              setEditingStat(null);
-              const player = await playerRepository.getSinglePlayer(playerId!);
-              const fullName = `${player.name} ${player.surname}`;
-              const updatePayload = { ...updatedStat, fullName };
-              await statRepository.updateStats(updatePayload);
-              const refreshed = await statRepository.getStatByPlayerId(
-                playerId!
-              );
-              setStats(refreshed);
-            }}
-            onCancel={() => setEditingStat(null)}
-          />
-        )}
+        {editStatModal()}
         <div>
           <a>Report by</a>
         </div>
       </div>
       <ConfirmModal
-        isOpen={ratingToDelete !== null}
+        isOpen={showRatingModal}
         title="Delete Rating"
         message={`Are you sure you want to delete this player's rating?`}
         onConfirm={confirmRatingsDelete}
         onCancel={cancelRatingsDelete}
       />
       <ConfirmModal
-        isOpen={statToDelete !== null}
+        isOpen={showStatsModal}
         title="Delete Stats"
         message={`Are you sure you want to delete this player's stats?`}
-        onConfirm={confirmStatsDelete}
+        onConfirm={() => confirmStatsDelete(Number(playerId!))}
         onCancel={cancelStatsDelete}
       />
     </div>

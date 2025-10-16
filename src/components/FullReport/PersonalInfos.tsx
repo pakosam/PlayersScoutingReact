@@ -7,7 +7,7 @@ import { HeightIcon } from "../../icons/HeightIcon";
 import { HomeIcon } from "../../icons/HomeIcon";
 import { ShirtIcon } from "../../icons/ShirtIcon";
 import { PenModifyIcon } from "../../icons/PenModifyIcon";
-import "./PersonalInfos.css"
+import "./PersonalInfos.css";
 
 interface PersonalInfosProps {
   player: IPlayer;
@@ -18,46 +18,57 @@ export const PersonalInfos: React.FC<PersonalInfosProps> = ({
   player,
   onUpdatePlayer,
 }) => {
+  const {
+    image,
+    name,
+    surname,
+    birthdate,
+    birthplace,
+    height,
+    shirtNumber,
+    positions,
+    club,
+  } = player;
   return (
     <div className="personal-infos" onClick={onUpdatePlayer}>
       <div className="image-container">
         <img
           className="player-image"
-          src={getPlayerImage(player.image, player.positions)}
+          src={getPlayerImage(image, positions)}
           alt="player-icon"
         />
       </div>
       <div className="infos-container">
         <div className="name-and-surname">
-          {player.name} {player.surname}
+          {name} {surname}
         </div>
         <div className="properties-with-icons">
           <div className="property">
             <div className="icon">
               <CalendarIcon />
             </div>
-            <div>{formatDate(player.birthdate)}</div>
+            <div>{formatDate(birthdate)}</div>
           </div>
           <div className="property">
             <div className="icon">
               <HeightIcon />
             </div>
-            <div>{player.height} cm</div>
+            <div>{height} cm</div>
           </div>
           <div className="property">
             <div className="icon">
               <HomeIcon />
             </div>
-            <div>{player.birthplace}</div>
+            <div>{birthplace}</div>
           </div>
           <div className="property">
             <div className="icon">
               <ShirtIcon />
             </div>
-            <div>{player.shirtNumber}</div>
+            <div>{shirtNumber}</div>
           </div>
         </div>
-        <div>Current club: {player.club}</div>
+        <div>Current club: {club}</div>
       </div>
 
       <div className="edit-icon">
