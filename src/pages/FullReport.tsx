@@ -7,23 +7,11 @@ import { playerRepository } from "../repositories/playerRepository";
 import { ratingRepository } from "../repositories/ratingRepository";
 import "./FullReport.css";
 import { statRepository } from "../repositories/statRepository";
-import { getPlayerImage } from "../utilities/getPlayerImage";
-import { HexagonRatingsChart } from "../components/FullReport/HexagonRatingsChart";
-import { CalendarIcon } from "../icons/CalendarIcon";
-import { HeightIcon } from "../icons/HeightIcon";
-import { HomeIcon } from "../icons/HomeIcon";
-import { ShirtIcon } from "../icons/ShirtIcon";
-import { formatDate } from "../utilities/formatDate";
-import { parsePositions } from "../utilities/parsePositions";
-import { getDotPosition } from "../components/FullReport/getDotByPosition";
-import { PenModifyIcon } from "../icons/PenModifyIcon";
-import { TrashCanIcon } from "../icons/TrashCanIcon";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { ConfirmModal } from "../components/PlayerView/ConfirmModal";
-import { IUpdateStats } from "../api/apiInterface";
 import { EditStatModal } from "../components/PlayerView/EditStatModal";
+import { PlayerInfos } from "../components/FullReport/PlayerInfos";
+import { StatsSection } from "../components/FullReport/StatsSection";
 
 export const FullReport = () => {
   const { playerId } = useParams<{ playerId: string }>();
@@ -121,24 +109,6 @@ export const FullReport = () => {
 
   const startEditStat = (stat: IStats) => setEditingStat(stat);
 
-  const saveStat = async () => {
-    if (!editingStat || !playerId) return;
-
-    const player = await playerRepository.getSinglePlayer(playerId);
-    const fullName = `${player.name} ${player.surname}`;
-
-    const updatedStat: IUpdateStats = {
-      ...editingStat,
-      fullName,
-    };
-
-    await statRepository.updateStats(updatedStat);
-    setEditingStat(null);
-
-    const updated = await statRepository.getStatByPlayerId(playerId);
-    setStats(updated);
-  };
-
   if (!player) return <p>Loading player...</p>;
 
   return (
@@ -147,180 +117,37 @@ export const FullReport = () => {
         <h4>FULL PLAYER REPORT</h4>
       </div>
       <div className="main-content">
-        <div className="player-infos">
-          {player ? (
-            <>
-              <div className="personal-infos" onClick={updatePlayerButton}>
-                <div className="image-container">
-                  <img
-                    className="player-image"
-                    src={getPlayerImage(player.image, player.positions)}
-                    alt="player-icon"
-                  />
-                </div>
-                <div className="infos-container">
-                  <div className="name-and-surname">
-                    {player.name} {player.surname}
-                  </div>
-                  <div className="properties-with-icons">
-                    <div className="property">
-                      <div className="icon">
-                        <CalendarIcon />
-                      </div>
-                      <div>{formatDate(player.birthdate)}</div>
-                    </div>
-                    <div className="property">
-                      <div className="icon">
-                        <HeightIcon />
-                      </div>
-                      <div>{player.height} cm</div>
-                    </div>
-                    <div className="property">
-                      <div className="icon">
-                        <HomeIcon />
-                      </div>
-                      <div>{player.birthplace}</div>
-                    </div>
-                    <div className="property">
-                      <div className="icon">
-                        <ShirtIcon />
-                      </div>
-                      <div>{player.shirtNumber}</div>
-                    </div>
-                  </div>
-                  <div>Current club: {player.club}</div>
-                </div>
-
-                <div className="edit-icon">
-                  <PenModifyIcon />
-                </div>
-              </div>
-              <div className="positions-display">
-                <div className="field-image">
-                  <img
-                    src="/assets/30547222_football_field_right_side_61.jpg"
-                    alt="soccer-field"
-                  />
-                  {player?.positions &&
-                    parsePositions(player.positions).map((pos, index) => (
-                      <div
-                        key={index}
-                        className="position-dot"
-                        style={getDotPosition(pos)}
-                        title={pos}
-                      />
-                    ))}
-                </div>
-
-                <div className="positions">
-                  <span>Position: {player.positions}</span>
-                </div>
-              </div>
-
-              <div className="ratings-showcase">
-                {rating ? (
-                  <>
-                    <HexagonRatingsChart
-                      ratings={rating}
-                      playerName={`${player?.name} ${player?.surname}`}
-                    />
-                    <div className="ratings-hover-icons">
-                      <div
-                        className="edit-icon"
-                        onClick={() => updateRatingButton()}
-                      >
-                        <PenModifyIcon />
-                      </div>
-                      <div
-                        className="trash-can-icon"
-                        onClick={() => requestRatingsDelete(player.id)}
-                      >
-                        <TrashCanIcon />
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <div className="add-ratings-container">
-                    <p>Add player's ratings</p>
-                    <div className="btn-container">
-                      <button
-                        className="add-ratings-btn"
-                        onClick={addRatingsButton}
-                      >
-                        <FontAwesomeIcon icon={faPlus} />
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </>
-          ) : (
-            <p>No player found</p>
-          )}
-        </div>
-        <div className="stats">
-          <div className="header">
-            <div className="header-and-button-wrapped">
-              <h3>STATS</h3>
-              <div className="btn-container">
-                <button className="add-stats-btn" onClick={addStatsButton}>
-                  <FontAwesomeIcon icon={faPlus} />
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="table-container">
-            <table>
-              <tr>
-                <th>Season</th>
-                <th>Club</th>
-                <th>Matches Played</th>
-                <th>Goals</th>
-                <th>Assists</th>
-                <th></th>
-              </tr>
-              {stats?.map((stat, index) => {
-                const { season, club, matchesPlayed, goals, assists } = stat;
-                return (
-                  <tr key={`${index}${season}${club}`}>
-                    <td>{season}</td>
-                    <td>{club}</td>
-                    <td>{matchesPlayed}</td>
-                    <td>{goals}</td>
-                    <td>{assists}</td>
-                    <td>
-                      <div className="table-cell-icons">
-                        <PenModifyIcon onClick={() => startEditStat(stat)} />
-                        <TrashCanIcon
-                          onClick={() => requestStatsDelete(stat.id)}
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </table>
-            {editingStat && (
-              <EditStatModal
-                stat={editingStat}
-                onSave={async (updatedStat) => {
-                  setEditingStat(null);
-                  const player = await playerRepository.getSinglePlayer(
-                    playerId!
-                  );
-                  const fullName = `${player.name} ${player.surname}`;
-                  const updatePayload = { ...updatedStat, fullName };
-                  await statRepository.updateStats(updatePayload);
-                  const refreshed = await statRepository.getStatByPlayerId(
-                    playerId!
-                  );
-                  setStats(refreshed);
-                }}
-                onCancel={() => setEditingStat(null)}
-              />
-            )}
-          </div>
-        </div>
+        <PlayerInfos
+          player={player}
+          rating={rating}
+          onUpdatePlayer={updatePlayerButton}
+          onAddRatings={addRatingsButton}
+          onUpdateRating={updateRatingButton}
+          onDeleteRating={() => requestRatingsDelete(player.id)}
+        />
+        <StatsSection
+          stats={stats || []}
+          onAddStats={addStatsButton}
+          onEditStat={startEditStat}
+          onDeleteStat={requestStatsDelete}
+        />
+        {editingStat && (
+          <EditStatModal
+            stat={editingStat}
+            onSave={async (updatedStat) => {
+              setEditingStat(null);
+              const player = await playerRepository.getSinglePlayer(playerId!);
+              const fullName = `${player.name} ${player.surname}`;
+              const updatePayload = { ...updatedStat, fullName };
+              await statRepository.updateStats(updatePayload);
+              const refreshed = await statRepository.getStatByPlayerId(
+                playerId!
+              );
+              setStats(refreshed);
+            }}
+            onCancel={() => setEditingStat(null)}
+          />
+        )}
         <div>
           <a>Report by</a>
         </div>

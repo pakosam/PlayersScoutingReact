@@ -1,0 +1,70 @@
+.ratings-showcase {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 400px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  transition: background-color 0.25s ease;
+}
+
+.ratings-showcase:hover {
+  background-color: #f8fafc;
+}
+
+.ratings-showcase .edit-icon {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.ratings-showcase .trash-can-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.ratings-showcase:hover .edit-icon,
+.ratings-showcase:hover .trash-can-icon {
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.add-ratings-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-ratings-container .btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.add-ratings-container .btn-container .add-ratings-btn {
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  border: none;
+  background-color: #74ff79;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .ratings-showcase {
+    min-height: 300px;
+  }
+}
