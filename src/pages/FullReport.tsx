@@ -19,12 +19,16 @@ import { getDotPosition } from "../components/FullReport/getDotByPosition";
 import { PenModifyIcon } from "../icons/PenModifyIcon";
 import { TrashCanIcon } from "../icons/TrashCanIcon";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { ConfirmModal } from "../components/PlayerView/ConfirmModal";
 
 export const FullReport = () => {
   const { playerId } = useParams<{ playerId: string }>();
   const [player, setPlayer] = useState<IPlayer | null>(null);
   const [rating, setRating] = useState<IRatings | null>(null);
   const [stats, setStats] = useState<IStats[]>();
+  const [ratingToDelete, setRatingToDelete] = useState<number | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,15 +37,12 @@ export const FullReport = () => {
     const load = async () => {
       try {
         const player = await playerRepository.getSinglePlayer(playerId);
-        console.log("Player data: ", player);
         setPlayer(player);
 
         const rating = await ratingRepository.getRatingByPlayerId(playerId);
-        console.log("Ratings data: ", rating);
         setRating(rating);
 
         const stat = await statRepository.getStatByPlayerId(playerId);
-        console.log("Stats data: ", stat);
         setStats(stat);
       } catch (err) {
         console.error(err);
@@ -55,6 +56,38 @@ export const FullReport = () => {
     if (!playerId) return;
     navigate(`/players/${playerId}/update-player`);
   };
+
+  const addRatingsButton = () => {
+    if (!playerId) return;
+    navigate(`/players/${playerId}/add-ratings`);
+  };
+
+  const updateRatingButton = () => {
+    if (!playerId) return;
+    navigate(`/players/${playerId}/update-ratings`);
+  };
+
+  const requestDelete = (id: number) => {
+    setRatingToDelete(id);
+  };
+
+  const confirmDelete = async () => {
+    if (ratingToDelete === null) return;
+
+    try {
+      await ratingRepository.delete(ratingToDelete);
+      setRating(null);
+      setRatingToDelete(null);
+    } catch (err) {
+      console.error("Failed to delete rating:", err);
+    }
+  };
+
+  const cancelDelete = () => {
+    setRatingToDelete(null);
+  };
+
+  if (!player) return <p>Loading player...</p>;
 
   return (
     <div className="full-report-container">
@@ -140,16 +173,32 @@ export const FullReport = () => {
                       playerName={`${player?.name} ${player?.surname}`}
                     />
                     <div className="ratings-hover-icons">
-                      <div className="edit-icon">
+                      <div
+                        className="edit-icon"
+                        onClick={() => updateRatingButton()}
+                      >
                         <PenModifyIcon />
                       </div>
-                      <div className="trash-can-icon">
+                      <div
+                        className="trash-can-icon"
+                        onClick={() => requestDelete(player.id)}
+                      >
                         <TrashCanIcon />
                       </div>
                     </div>
                   </>
                 ) : (
-                  <p>No ratings data available</p>
+                  <div className="add-ratings-container">
+                    <p>Add player's ratings</p>
+                    <div className="btn-container">
+                      <button
+                        className="add-player-btn"
+                        onClick={addRatingsButton}
+                      >
+                        <FontAwesomeIcon icon={faPlus} />
+                      </button>
+                    </div>
+                  </div>
                 )}
               </div>
             </>
@@ -196,6 +245,13 @@ export const FullReport = () => {
           <a>Report by</a>
         </div>
       </div>
+      <ConfirmModal
+        isOpen={ratingToDelete !== null}
+        title="Delete Rating"
+        message={`Are you sure you want to delete this player's rating?`}
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+      />
     </div>
   );
 };

@@ -1,13 +1,57 @@
-import { IRatings } from "../api/apiInterface";
+import {
+  IAddRatings,
+  IPlayers,
+  IRatings,
+  IUpdateRatings,
+} from "../api/apiInterface";
 
 const url = "https://localhost:7066/api";
 
 export const ratingRepository = {
-  getRatingByPlayerId: async (playerId: string): Promise<IRatings> => {
-    const result = await fetch(`${url}/Ratings/${playerId}`);
+  getRatingByPlayerId: async (playerId: string): Promise<IRatings | null> => {
+    const result = await fetch(`${url}/Ratings`);
     if (!result.ok) throw new Error("Failed to fetch ratings");
 
-    const allRatings: IRatings = await result.json();
-    return allRatings
+    const allRatings: IRatings[] = await result.json();
+    const ratingForPlayer =
+      allRatings.find((r) => r.playerId === Number(playerId)) || null;
+    return ratingForPlayer;
+  },
+
+  addRatings: async (ratings: IAddRatings): Promise<IRatings> => {
+    const response = await fetch(`${url}/Ratings`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...ratings,
+        player_id: ratings.playerId,
+      }),
+    });
+    if (!response.ok) throw new Error("Failed to add ratings");
+
+    const data: IRatings = await response.json();
+    return data;
+  },
+
+  updateRatings: async (ratings: IUpdateRatings): Promise<IRatings> => {
+    const response = await fetch(`${url}/Ratings`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...ratings,
+        player_id: ratings.playerId,
+      }),
+    });
+    if (!response.ok) throw new Error("Failed to add ratings");
+
+    const data: IRatings = await response.json();
+    return data;
+  },
+
+  delete: async (id: number): Promise<void> => {
+    const response = await fetch(`${url}/Ratings?id=${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) throw new Error("Failed to delete rating");
   },
 };

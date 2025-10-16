@@ -11,6 +11,8 @@ import { Report } from "./pages/Report";
 import "./App.css";
 import { FullReport } from "./pages/FullReport";
 import { UpdatePlayer } from "./pages/UpdatePlayer";
+import { AddRatings } from "./pages/AddRatings";
+import { UpdateRatings } from "./pages/UpdateRatings";
 
 function AppContent() {
   const location = useLocation();
@@ -26,6 +28,8 @@ function AppContent() {
         <Route path="/players/:playerId/info" element={<Report />} />
         <Route path="/players/:playerId/full-report" element={<FullReport />} />
         <Route path="/players/:playerId/update-player" element={<UpdatePlayer />} />
+        <Route path="/players/:playerId/add-ratings" element={<AddRatings />} />
+        <Route path="/players/:playerId/update-ratings" element={<UpdateRatings />} />
       </Routes>
     </div>
   );
