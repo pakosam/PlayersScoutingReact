@@ -1,0 +1,17 @@
+.report-container {
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
+.report-container .link-for-full-report {
+  padding: 10px;
+}
+
+.report-container .link-for-full-report a {
+  color: #fff;
+}

@@ -1,6 +1,15 @@
-.page {
-    height: inherit;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
+#root.root-default {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  font-family: Montserrat, sans-serif;
+}
+
+#root.root-playerview {
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  font-family: Montserrat, sans-serif;
 }

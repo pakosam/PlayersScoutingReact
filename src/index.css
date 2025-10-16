@@ -1,15 +1,3 @@
-#root {
-  height: inherit;
-  padding: 10px;
-}
-
 body {
-  height: 100vh;
   margin: 0;
-  font-family: Montserrat, sans-serif;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
 }

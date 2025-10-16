@@ -1,0 +1,23 @@
+.report-container .description {
+  display: flex;
+  flex-direction: column;
+  flex: 4;
+  justify-content: space-evenly;
+  padding: 10px;
+}
+
+.report-container .description p,
+.report-container .player-report p {
+  text-align: left;
+  margin: 0;
+}
+
+.report-container .player-report {
+  display: flex;
+  flex-direction: column;
+}
+
+.player-report h4 {
+  margin-bottom: 30px;
+  text-align: left;
+}
