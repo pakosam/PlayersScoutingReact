@@ -35,7 +35,10 @@ export const Report = () => {
   return (
     <div
       className="report-container"
-      style={{ backgroundImage: 'url("/assets/view-empty-soccer-stadium-with-fantasy-dreamy-sky.jpg")' }}
+      style={{
+        backgroundImage:
+          'url("/assets/view-empty-soccer-stadium-with-fantasy-dreamy-sky.jpg")',
+      }}
     >
       {player ? (
         <>

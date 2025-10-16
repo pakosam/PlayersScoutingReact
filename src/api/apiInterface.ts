@@ -30,7 +30,9 @@ export interface IPlayer {
   surname: string;
   birthdate: string;
   birthplace: string;
+  height: number;
   foot: string;
+  shirtNumber: number
   positions: string;
   club: string;
 }
@@ -52,4 +54,23 @@ export interface ConfirmModalProps {
   message?: string;
   onConfirm: () => void;
   onCancel: () => void;
+}
+
+export interface IStats {
+  id: number;
+  season: string;
+  club: string;
+  matchesPlayed: number;
+  goals: number;
+  assists: number;
+  playerId: number;
+}
+
+export interface IAddStats {
+  season: string;
+  club: string;
+  matchesPlayed: number;
+  goals: number;
+  assists: number;
+  fullName: string;
 }
