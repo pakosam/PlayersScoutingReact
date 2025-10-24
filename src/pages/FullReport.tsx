@@ -12,6 +12,8 @@ import { PlayerInfos } from "../components/FullReport/PlayerInfos";
 import { StatsSection } from "../components/FullReport/StatsSection";
 import { usePlayerData } from "../api/usePlayerData";
 
+type ReportActions = "update-player" | "add-ratings" | "update-ratings" | "add-stats"
+
 export const FullReport = () => {
   const { playerId } = useParams<{ playerId: string }>();
   const { player, rating, stats, setStats } = usePlayerData(playerId);
@@ -21,7 +23,7 @@ export const FullReport = () => {
   const navigate = useNavigate();
 
   const navigateTo = (
-    action: "update-player" | "add-ratings" | "update-ratings" | "add-stats"
+    action: ReportActions
   ) => {
     if (!playerId) return;
     const path = `/players/${playerId}/${action}`;
