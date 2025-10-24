@@ -14,7 +14,7 @@ export const AddStats = () => {
   const navigate = useNavigate();
   const { playerId } = useParams<{ playerId: string }>();
   const location = useLocation();
-  const { fullName } = location.state || { fullName: "" };
+  const { fullName } = location.state;
 
   const submitBtn = async (event: FormEvent) => {
     event.preventDefault();

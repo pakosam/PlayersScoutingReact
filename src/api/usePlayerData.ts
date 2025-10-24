@@ -17,11 +17,9 @@ export const usePlayerData = (playerId?: string) => {
       try {
         setError(null);
 
-        const [player, rating, stats] = await Promise.all([
-          playerRepository.getSinglePlayer(playerId),
-          ratingRepository.getRatingByPlayerId(playerId),
-          statRepository.getStatByPlayerId(playerId),
-        ]);
+        const player = await playerRepository.getSinglePlayer(playerId);
+        const rating = await ratingRepository.getRatingByPlayerId(playerId);
+        const stats = await statRepository.getStatByPlayerId(playerId);
 
         setPlayer(player);
         setRating(rating);

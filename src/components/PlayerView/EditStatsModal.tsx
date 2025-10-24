@@ -1,23 +1,23 @@
 import { IStats } from "../../api/apiInterface";
-import "./EditStatModal.css";
+import "./EditStatsModal.css";
 import { useState } from "react";
 
-interface EditStatModalProps {
-  stat: IStats;
+interface EditStatsModalProps {
+  stats: IStats;
   onSave: (updated: IStats) => void;
   onCancel: () => void;
 }
 
-export const EditStatModal = ({
-  stat,
+export const EditStatsModal = ({
+  stats,
   onSave,
   onCancel,
-}: EditStatModalProps) => {
-  const [localStat, setLocalStat] = useState(stat);
+}: EditStatsModalProps) => {
+  const [statsToEdit, setStatsToEdit] = useState(stats);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(localStat);
+    onSave(statsToEdit);
   };
 
   return (
@@ -27,27 +27,27 @@ export const EditStatModal = ({
         <form onSubmit={handleSubmit}>
           <label>Season</label>
           <input
-            value={localStat.season}
+            value={statsToEdit.season}
             onChange={(e) =>
-              setLocalStat({ ...localStat, season: e.target.value })
+              setStatsToEdit({ ...statsToEdit, season: e.target.value })
             }
           />
 
           <label>Club</label>
           <input
-            value={localStat.club}
+            value={statsToEdit.club}
             onChange={(e) =>
-              setLocalStat({ ...localStat, club: e.target.value })
+              setStatsToEdit({ ...statsToEdit, club: e.target.value })
             }
           />
 
           <label>Matches</label>
           <input
             type="number"
-            value={localStat.matchesPlayed}
+            value={statsToEdit.matchesPlayed}
             onChange={(e) =>
-              setLocalStat({
-                ...localStat,
+              setStatsToEdit({
+                ...statsToEdit,
                 matchesPlayed: Number(e.target.value),
               })
             }
@@ -56,18 +56,18 @@ export const EditStatModal = ({
           <label>Goals</label>
           <input
             type="number"
-            value={localStat.goals}
+            value={statsToEdit.goals}
             onChange={(e) =>
-              setLocalStat({ ...localStat, goals: Number(e.target.value) })
+              setStatsToEdit({ ...statsToEdit, goals: Number(e.target.value) })
             }
           />
 
           <label>Assists</label>
           <input
             type="number"
-            value={localStat.assists}
+            value={statsToEdit.assists}
             onChange={(e) =>
-              setLocalStat({ ...localStat, assists: Number(e.target.value) })
+              setStatsToEdit({ ...statsToEdit, assists: Number(e.target.value) })
             }
           />
 
