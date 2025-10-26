@@ -1,71 +1,46 @@
-import { useEffect, useState } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
+import { PlayerView } from "./pages/PlayerView";
+import { AddPlayer } from "./pages/AddPlayer";
+import { Report } from "./pages/Report";
 import "./App.css";
-import { OptionIcon } from "./icons/OptionIcon";
-import { error } from "console";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FullReport } from "./pages/FullReport";
+import { UpdatePlayer } from "./pages/UpdatePlayer";
+import { AddRatings } from "./pages/AddRatings";
+import { UpdateRatings } from "./pages/UpdateRatings";
+import { AddStats } from "./pages/AddStats";
 
-interface IPlayers {
-  id: number;
-  image?: string;
-  name: string;
-  surname: string;
-  club: string;
-}
-
-function App() {
-  const [players, setPlayers] = useState<IPlayers[]>();
-
-  useEffect(() => {
-    fetch("https://localhost:7066/api/Players")
-      .then((response) => response.json())
-      .then((data) => setPlayers(data))
-      .catch((error) => console.error("Error: ", error));
-  }, []);
+function AppContent() {
+  const location = useLocation();
+  const rootClass =
+    location.pathname === "/players" ? "root-playerview" : "root-default";
 
   return (
-    <div id="main-menu">
-      <div className="header-and-options-button">
-        <div>
-          <h1>Players Scouting</h1>
-        </div>
-        <div>
-          <OptionIcon />
-        </div>
-      </div>
-      <div className="selected-option">
-        <h3>Reports</h3>
-      </div>
-      <div className="main-content">
-        <div className="btn-container">
-          <button className="add-player-btn">
-            <FontAwesomeIcon icon={faPlus} />
-          </button>
-        </div>
-        <div className="list">
-          {players?.map((player, index) => {
-            const { image, name, surname, club } = player;
-            return (
-              <div key={`${index}${name}${surname}${club}`} className="player">
-                <div className="image-container">
-                  <img
-                    className="player-image"
-                    src={image || "/assets/forward.png"}
-                  />
-                </div>
-                <div className="player-info">
-                  <p className="player-info-fullname">
-                    Scouting report: {name + " " + surname}
-                  </p>
-                  <p className="player-info-club">Club: {club}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+    <div id="root" className={rootClass}>
+      <Routes>
+        <Route path="/" element={<Navigate to="/players" replace />} />
+        <Route path="/players" element={<PlayerView />} />
+        <Route path="/players/add-player" element={<AddPlayer />} />
+        <Route path="/players/:playerId/info" element={<Report />} />
+        <Route path="/players/:playerId/full-report" element={<FullReport />} />
+        <Route path="/players/:playerId/update-player" element={<UpdatePlayer />} />
+        <Route path="/players/:playerId/add-ratings" element={<AddRatings />} />
+        <Route path="/players/:playerId/update-ratings" element={<UpdateRatings />} />
+        <Route path="/players/:playerId/add-stats" element={<AddStats />} />
+      </Routes>
     </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  );
+}

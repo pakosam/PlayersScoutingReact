@@ -1,0 +1,95 @@
+.add-player {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(167deg, #f9efe8, transparent);
+}
+
+.header {
+  width: 100%;
+  flex: 2;
+  align-content: center;
+}
+
+h4 {
+  text-align: center;
+  font-size: 25px;
+  margin: 0;
+}
+
+.form-container {
+  flex: 10;
+  width: 98%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container .form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.both-form-sections {
+  display: flex;
+  flex-direction: row;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.form-section p {
+  margin: 0 0 30px;
+  font-size: 18px;
+  font-style: italic;
+}
+
+.form-section > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.single-row-of-form {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 650px;
+}
+
+.single-row-of-form > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  border: 2px solid #cfad6faa;
+  border-radius: 8px;
+  height: 25px;
+  margin-bottom: 10px;
+}
+
+label {
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.add-player-button {
+  align-self: center;
+  padding: 15px;
+  border-radius: 15px;
+  border: none;
+  background-color: #73e86c9c;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 15px;
+}

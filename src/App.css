@@ -1,87 +1,15 @@
-body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+#root.root-default {
   height: 100vh;
-}
-
-#main-menu {
-  height: 100%;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  font-family: Montserrat, sans-serif;
 }
 
-.header-and-options-button {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  flex: 1;
-}
-
-.selected-option {
-  flex: 2;
+#root.root-playerview {
+  height: max-content;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-}
-
-.main-content {
-  display: flex;
-  flex-direction: column;
-}
-
-.btn-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  margin-bottom: 15px;
-}
-
-.add-player-btn {
-  height: 50px;
-  width: 50px;
-  border-radius: 25px;
-  border: none;
-  background-color: #73e86c9c;
-  cursor: pointer;
-}
-
-.list {
-  flex: 10;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-}
-
-.list .player {
-  padding: 10px;
-  border: outset;
-  background-color: cornsilk;
-}
-
-.list .player .player-info {
-  padding: 10px;
-  justify-items: center;
-  color: #997ad2;
-  font-weight: 700;
-}
-
-.list .player .player-info .player-info-fullname {
-  margin: 0;
-  padding-top: 10px;
-  font-size: 20px;
-}
-
-.list .player .player-info .player-info-club {
-  margin-bottom: 0;
-  padding-bottom: 10px;
-  font-size: 20px;
-}
-
-.image-container {
-  justify-self: center;
-}
-
-.player-image {
-  height: 100%;
-  width: 100%;
+  box-sizing: border-box;
+  font-family: Montserrat, sans-serif;
 }

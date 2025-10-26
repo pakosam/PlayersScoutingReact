@@ -1,0 +1,57 @@
+#main-menu {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.header-and-options-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.selected-option {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 10;
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.add-player-btn {
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  border: none;
+  background-color: #74ff79;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .list {
+    grid-template-columns: 1fr;
+  }
+}
