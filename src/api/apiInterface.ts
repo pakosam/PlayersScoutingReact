@@ -74,7 +74,7 @@ export interface IAddRatings {
 
 export interface IUpdateRatings {
   playerId: number;
-  id: number
+  id: number;
   attack: number;
   defense: number;
   tactics: number;
@@ -121,4 +121,11 @@ export interface IUpdateStats {
   goals: number;
   assists: number;
   fullName: string;
+}
+
+export interface IScouts {
+  id: number;
+  image?: string;
+  name: string;
+  surname: string;
 }
