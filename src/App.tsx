@@ -15,6 +15,7 @@ import { AddRatings } from "./pages/AddRatings";
 import { UpdateRatings } from "./pages/UpdateRatings";
 import { AddStats } from "./pages/AddStats";
 import { ScoutView } from "./pages/ScoutView";
+import { AddScout } from "./pages/AddScout";
 
 function AppContent() {
   const location = useLocation();
@@ -29,11 +30,18 @@ function AppContent() {
         <Route path="/players/add-player" element={<AddPlayer />} />
         <Route path="/players/:playerId/info" element={<Report />} />
         <Route path="/players/:playerId/full-report" element={<FullReport />} />
-        <Route path="/players/:playerId/update-player" element={<UpdatePlayer />} />
+        <Route
+          path="/players/:playerId/update-player"
+          element={<UpdatePlayer />}
+        />
         <Route path="/players/:playerId/add-ratings" element={<AddRatings />} />
-        <Route path="/players/:playerId/update-ratings" element={<UpdateRatings />} />
+        <Route
+          path="/players/:playerId/update-ratings"
+          element={<UpdateRatings />}
+        />
         <Route path="/players/:playerId/add-stats" element={<AddStats />} />
         <Route path="/scouts" element={<ScoutView />} />
+        <Route path="/scouts/add-scout" element={<AddScout />} />
       </Routes>
     </div>
   );

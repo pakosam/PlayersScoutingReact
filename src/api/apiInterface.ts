@@ -129,3 +129,13 @@ export interface IScouts {
   name: string;
   surname: string;
 }
+
+export interface IAddScout {
+  name: string;
+  surname: string;
+  birthdate: string;
+  birthplace: string;
+  email: string;
+  password: string;
+  playerFullName: string;
+}

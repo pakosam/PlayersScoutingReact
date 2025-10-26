@@ -8,4 +8,15 @@ export const scoutRepository = {
     if (!response.ok) throw new Error("Failed to fetch scouts");
     return response.json();
   },
+
+  create: async (scout: Omit<IScouts, "id">): Promise<IScouts> => {
+    const response = await fetch(`${url}/Scouts`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(scout),
+    });
+    if (!response.ok)
+      throw new Error(`Failed to create scout: ${response.status}`);
+    return response.json();
+  },
 };

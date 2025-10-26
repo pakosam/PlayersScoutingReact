@@ -7,15 +7,19 @@ import { PenModifyIcon } from "../icons/PenModifyIcon";
 import { useEffect, useState } from "react";
 import { IScouts } from "../api/apiInterface";
 import { scoutRepository } from "../repositories/scoutRepository";
+import { useNavigate } from "react-router-dom";
 
 export const ScoutView = () => {
   const [scouts, setScouts] = useState<IScouts[]>([]);
+  const navigate = useNavigate()
 
   useEffect(() => {
     scoutRepository.getAllScouts().then((data) => {
       setScouts(data);
     });
   }, []);
+
+  const addScoutButton = () => navigate("/scouts/add-scout");
 
   return (
     <div
@@ -36,7 +40,7 @@ export const ScoutView = () => {
 
       <div className="main-content">
         <div className="btn-container">
-          <button className="add-scout-btn">
+          <button className="add-scout-btn" onClick={addScoutButton}>
             <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>
