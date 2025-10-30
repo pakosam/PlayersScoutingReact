@@ -1,0 +1,25 @@
+#main-menu {
+  display: flex;
+  flex-direction: column;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.header-and-options-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.welcome-text {
+  color: #b6903a;
+  display: flex;
+  flex: 3;
+  flex-direction: column;
+  align-items: center;
+  font-size: 40px;
+  font-weight: 800;
+}

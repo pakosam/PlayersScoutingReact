@@ -17,16 +17,20 @@ import { AddStats } from "./pages/AddStats";
 import { ScoutView } from "./pages/ScoutView";
 import { AddScout } from "./pages/AddScout";
 import { UpdateScout } from "./pages/UpdateScout";
+import { HomePage } from "./pages/HomePage";
 
 function AppContent() {
   const location = useLocation();
   const rootClass =
-    location.pathname === "/players" ? "root-playerview" : "root-default";
+    location.pathname === "/players" || location.pathname === "/scouts"
+      ? "root-playerview"
+      : "root-default";
 
   return (
     <div id="root" className={rootClass}>
       <Routes>
-        <Route path="/" element={<Navigate to="/players" replace />} />
+        <Route path="/" element={<Navigate to="/home-page" replace />} />
+        <Route path="/home-page" element={<HomePage />} />
         <Route path="/players" element={<PlayerView />} />
         <Route path="/players/add-player" element={<AddPlayer />} />
         <Route path="/players/:playerId/info" element={<Report />} />
@@ -43,10 +47,7 @@ function AppContent() {
         <Route path="/players/:playerId/add-stats" element={<AddStats />} />
         <Route path="/scouts" element={<ScoutView />} />
         <Route path="/scouts/add-scout" element={<AddScout />} />
-        <Route
-          path="/scouts/:scoutId/update-scout"
-          element={<UpdateScout />}
-        />
+        <Route path="/scouts/:scoutId/update-scout" element={<UpdateScout />} />
       </Routes>
     </div>
   );
