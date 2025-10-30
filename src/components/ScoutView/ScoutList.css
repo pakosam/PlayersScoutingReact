@@ -1,0 +1,8 @@
+.list {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  overflow-y: auto;
+  padding-bottom: 10px;
+}

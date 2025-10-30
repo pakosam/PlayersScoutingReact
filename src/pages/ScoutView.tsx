@@ -3,27 +3,36 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { DeleteIcon } from "../icons/DeleteIcon";
 import "./ScoutView.css";
-import { PenModifyIcon } from "../icons/PenModifyIcon";
 import { useEffect, useState } from "react";
 import { IScouts } from "../api/apiInterface";
 import { scoutRepository } from "../repositories/scoutRepository";
 import { useNavigate } from "react-router-dom";
 import { ConfirmModal } from "../components/PlayerView/ConfirmModal";
+import { ScoutList } from "../components/ScoutView/ScoutList";
 
 export const ScoutView = () => {
   const [scouts, setScouts] = useState<IScouts[]>([]);
   const [scoutToDelete, setScoutToDelete] = useState<IScouts | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    scoutRepository.getAllScouts().then((data) => {
-      setScouts(data);
-    });
-  }, []);
+      scoutRepository
+        .getAllScouts()
+        .then((data) => {
+          setScouts(data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setError(err.message);
+          setLoading(false);
+        });
+    }, []);
 
   const addScoutButton = () => navigate("/scouts/add-scout");
-  const updateScoutButton = async (id: number) => {
+  const editIcon = async (id: number) => {
     navigate(`/scouts/${id}/update-scout`);
   };
 
@@ -65,46 +74,16 @@ export const ScoutView = () => {
             <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>
-        <div className="list">
-          {scouts.map((scout, index) => {
-            const {
-              image,
-              name,
-              surname,
-              birthdate,
-              birthplace,
-              email,
-              password,
-              playerFullName,
-            } = scout;
-            return (
-              <div
-                className="scout"
-                key={`${index}${name}${surname}${birthdate}${email}`}
-              >
-                <div className="image-container">
-                  <img className="scout-image" src="/assets/scout.png" />
-                </div>
-                <div className="scout-info">
-                  <p className="scout-info-fullname">
-                    Scout name: {scout.name} {scout.surname}
-                  </p>
-                </div>
+        {loading && <p>Loading...</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
-                <div className="scout-hover-icons">
-                  <div className="edit-icon">
-                    <PenModifyIcon
-                      onClick={() => updateScoutButton(scout.id)}
-                    />
-                  </div>
-                  <div className="delete">
-                    <DeleteIcon onClick={() => requestDelete(scout.id)} />
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        {!loading && !error && (
+          <ScoutList
+            scouts={scouts}
+            onEdit={editIcon}
+            onDelete={requestDelete}
+          />
+        )}
       </div>
 
       <ConfirmModal
