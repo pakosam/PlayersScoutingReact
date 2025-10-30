@@ -128,9 +128,36 @@ export interface IScouts {
   image?: string;
   name: string;
   surname: string;
+  birthdate: string;
+  birthplace: string;
+  email: string;
+  password: string;
+  playerFullName: string;
+}
+
+export interface IScout {
+  id: number;
+  name: string;
+  surname: string;
+  birthdate: string;
+  birthplace: string;
+  email: string;
+  password: string;
+  playerFullName: string;
 }
 
 export interface IAddScout {
+  name: string;
+  surname: string;
+  birthdate: string;
+  birthplace: string;
+  email: string;
+  password: string;
+  playerFullName: string;
+}
+
+export interface IUpdateScout {
+  id: number;
   name: string;
   surname: string;
   birthdate: string;
