@@ -92,6 +92,12 @@ export interface ConfirmModalProps {
   onCancel: () => void;
 }
 
+export interface AuthModalProps {
+  onClose: () => void;
+  toLogin: () => void;
+  toRegister: () => void;
+}
+
 export interface IStats {
   id: number;
   season: string;

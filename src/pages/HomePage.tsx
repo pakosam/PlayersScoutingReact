@@ -1,7 +1,20 @@
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { AuthModal } from "../components/HomePage/AuthModal";
 import { OptionIcon } from "../icons/OptionIcon";
 import "./HomePage.css";
 
 export const HomePage = () => {
+  const navigate = useNavigate();
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const toLogin = () => {
+    navigate("/login");
+  };
+
+  const toRegister = () => {
+    navigate("/register");
+  };
+
   return (
     <div
       id="main-menu"
@@ -12,7 +25,7 @@ export const HomePage = () => {
     >
       <div className="header-and-options-button">
         <h1>Players Scouting</h1>
-        <OptionIcon />
+        <OptionIcon onClick={() => setShowAuthModal(true)} />
       </div>
 
       <div className="welcome-text">
@@ -26,6 +39,13 @@ export const HomePage = () => {
           Start your journey today. <br />
         </p>
       </div>
+      {showAuthModal && (
+        <AuthModal
+          onClose={() => setShowAuthModal(false)}
+          toLogin={toLogin}
+          toRegister={toRegister}
+        />
+      )}
     </div>
   );
 };
