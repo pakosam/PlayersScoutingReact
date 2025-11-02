@@ -162,6 +162,15 @@ export interface IAddScout {
   playerFullName: string;
 }
 
+export interface IRegister {
+  name: string;
+  surname: string;
+  birthdate: string;
+  birthplace: string;
+  email: string;
+  password: string;
+}
+
 export interface IUpdateScout {
   id: number;
   name: string;
