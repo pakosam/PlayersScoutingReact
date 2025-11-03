@@ -171,6 +171,11 @@ export interface IRegister {
   password: string;
 }
 
+export interface ILogin {
+  email: string;
+  password: string;
+}
+
 export interface IUpdateScout {
   id: number;
   name: string;

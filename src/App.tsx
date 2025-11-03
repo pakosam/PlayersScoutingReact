@@ -19,6 +19,7 @@ import { AddScout } from "./pages/AddScout";
 import { UpdateScout } from "./pages/UpdateScout";
 import { HomePage } from "./pages/HomePage";
 import { Register } from "./pages/Register";
+import { Login } from "./pages/Login";
 
 function AppContent() {
   const location = useLocation();
@@ -33,6 +34,7 @@ function AppContent() {
         <Route path="/" element={<Navigate to="/home-page" replace />} />
         <Route path="/home-page" element={<HomePage />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/players" element={<PlayerView />} />
         <Route path="/players/add-player" element={<AddPlayer />} />
         <Route path="/players/:playerId/info" element={<Report />} />
