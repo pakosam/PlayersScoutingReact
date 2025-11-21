@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, FormEvent } from "react";
 import { scoutRepository } from "../repositories/scoutRepository";
 import { IUpdateScout } from "../api/apiInterface";
-import "./UpdateScout.css"
+import "./UpdateScout.css";
 
 export const UpdateScout = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export const UpdateScout = () => {
     const fetchScout = async () => {
       if (!scoutId) return;
       try {
-        const data = await scoutRepository.getSingleScout(scoutId);
+        const data = await scoutRepository.getSingleScout(Number(scoutId));
 
         setId(data.id);
         setName(data.name);
@@ -32,7 +32,6 @@ export const UpdateScout = () => {
         setEmail(data.email);
         setPassword(data.password);
         setPlayerFullName(data.playerFullName);
-        console.log(data)
       } catch (err) {
         console.error("Failed to load parking", err);
       }
@@ -56,7 +55,7 @@ export const UpdateScout = () => {
     };
 
     try {
-      await scoutRepository.update(updatedScout);
+      await scoutRepository.updateScout(updatedScout);
       navigate(`/scouts`);
     } catch (error) {
       console.error("Error:", error);

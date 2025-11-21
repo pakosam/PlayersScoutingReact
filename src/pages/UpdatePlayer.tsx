@@ -24,7 +24,7 @@ export const UpdatePlayer = () => {
     const fetchPlayer = async () => {
       if (!playerId) return;
       try {
-        const data = await playerRepository.getSinglePlayer(playerId);
+        const data = await playerRepository.getSinglePlayer(Number(playerId));
 
         setId(data.id);
         setName(data.name);
@@ -61,7 +61,7 @@ export const UpdatePlayer = () => {
     };
 
     try {
-      await playerRepository.update(updatedPlayer);
+      await playerRepository.updatePlayer(updatedPlayer);
       navigate(`/players/${playerId}/full-report`);
     } catch (error) {
       console.error("Error:", error);

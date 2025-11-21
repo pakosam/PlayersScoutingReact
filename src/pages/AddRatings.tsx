@@ -21,7 +21,7 @@ export const AddRatings = () => {
 
     const fetchPlayer = async () => {
       try {
-        const player = await playerRepository.getSinglePlayer(playerId);
+        const player = await playerRepository.getSinglePlayer(Number(playerId));
         if (player) {
           setFullName(`${player.name} ${player.surname}`);
         }
@@ -37,7 +37,7 @@ export const AddRatings = () => {
     event.preventDefault();
 
     try {
-      const newRatings = await ratingRepository.addRatings({
+      await ratingRepository.addRatings({
         playerId: Number(playerId),
         attack,
         defense,

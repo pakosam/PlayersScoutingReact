@@ -1,45 +1,31 @@
-import { IScout, IScouts } from "../api/apiInterface";
+import { IScout, IScouts, IAddScout, IUpdateScout } from "../api/apiInterface";
+import { axiosInstance } from "../api/axiosInstance";
 
-const url = "https://localhost:7066/api";
+class ScoutRepository {
+  async getAllScouts(): Promise<IScouts[]> {
+    const response = await axiosInstance.get<IScouts[]>("/Scouts");
+    return response.data;
+  }
 
-export const scoutRepository = {
-  getAllScouts: async (): Promise<IScouts[]> => {
-    const response = await fetch(`${url}/Scouts`);
-    if (!response.ok) throw new Error("Failed to fetch scouts");
-    return response.json();
-  },
+  async getSingleScout(id: number) {
+    const response = await axiosInstance.get<IScout>(`/Scouts/${id}`);
+    return response.data;
+  }
 
-  getSingleScout: async (id: string): Promise<IScout> => {
-      const response = await fetch(`${url}/Scouts/${id}`);
-      if (!response.ok) throw new Error("Failed to fetch scout");
-      return response.json();
-    },
+  async deleteScout(id: number): Promise<IScout> {
+    const response = await axiosInstance.delete<IScout>(`/Scouts?id=${id}`);
+    return response.data;
+  }
 
-  create: async (scout: Omit<IScouts, "id">): Promise<IScouts> => {
-    const response = await fetch(`${url}/Scouts`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(scout),
-    });
-    if (!response.ok)
-      throw new Error(`Failed to create scout: ${response.status}`);
-    return response.json();
-  },
+  async addScout(credentials: IAddScout) {
+    const response = await axiosInstance.post("/Scouts", credentials);
+    return response.data;
+  }
 
-  update: async (scout: Omit<IScouts, "id">): Promise<IScouts> => {
-    const response = await fetch(`${url}/Scouts`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(scout),
-    });
-    if (!response.ok)
-      throw new Error(`Failed to update scout: ${response.status}`);
-    return response.json();
-  },
+  async updateScout(credentials: IUpdateScout) {
+    const response = await axiosInstance.put("/Scouts", credentials);
+    return response.data;
+  }
+}
 
-  delete: async (id: number): Promise<void> => {
-    const response = await fetch(`${url}/Scouts?id=${id}`, { method: "DELETE" });
-    if (!response.ok) throw new Error("Failed to delete scout");
-    return response.json();
-  },
-};
+export const scoutRepository = new ScoutRepository();

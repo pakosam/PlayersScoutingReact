@@ -22,11 +22,13 @@ export const UpdateRatings = () => {
 
     const fetchPlayer = async () => {
       try {
-        const player = await playerRepository.getSinglePlayer(playerId);
+        const player = await playerRepository.getSinglePlayer(Number(playerId));
         if (player) {
           setFullName(`${player.name} ${player.surname}`);
         }
-        const ratings = await ratingRepository.getRatingByPlayerId(playerId);
+        const ratings = await ratingRepository.getRatingByPlayerId(
+          Number(playerId)
+        );
         if (ratings) {
           setId(ratings.id);
           setAttack(ratings.attack);

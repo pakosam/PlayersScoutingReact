@@ -1,50 +1,31 @@
 import { IAddStats, IStats, IUpdateStats } from "../api/apiInterface";
+import { axiosInstance } from "../api/axiosInstance";
 
-const url = "https://localhost:7066/api";
+class StatRepository {
+  async getStatByPlayerId(playerId: number): Promise<IStats[]> {
+    const response = await axiosInstance.get<IStats[]>(
+      `/Stats/player/${playerId}`
+    );
+    return response.data;
+  }
 
-export const statRepository = {
-  getStatByPlayerId: async (playerId: string): Promise<IStats[]> => {
-    const result = await fetch(`${url}/Stats/player/${playerId}`);
-    if (!result.ok) throw new Error("Failed to fetch stats");
+  async addStats(credentials: IAddStats) {
+    const response = await axiosInstance.post<IAddStats>("/Stats", credentials);
+    return response.data;
+  }
 
-    const allStats: IStats[] = await result.json();
-    return allStats;
-  },
+  async updateStats(credentials: IUpdateStats) {
+    const response = await axiosInstance.put<IUpdateStats>(
+      "/Stats",
+      credentials
+    );
+    return response.data;
+  }
 
-  addStats: async (stats: IAddStats): Promise<IStats> => {
-    const response = await fetch(`${url}/Stats`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...stats,
-        player_id: stats.playerId,
-      }),
-    });
-    if (!response.ok) throw new Error("Failed to add stats");
+  async deleteStats(id: number) {
+    const response = await axiosInstance.delete<IStats>(`/Stats/${id}`);
+    return response.data;
+  }
+}
 
-    const data: IStats = await response.json();
-    return data;
-  },
-
-  updateStats: async (stats: IUpdateStats): Promise<IStats> => {
-    const response = await fetch(`${url}/Stats`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...stats,
-        player_id: stats.playerId,
-      }),
-    });
-    if (!response.ok) throw new Error("Failed to update stats");
-
-    const data: IStats = await response.json();
-    return data;
-  },
-
-  delete: async (id: number): Promise<void> => {
-    const response = await fetch(`${url}/Stats?id=${id}`, {
-      method: "DELETE",
-    });
-    if (!response.ok) throw new Error("Failed to delete stats");
-  },
-};
+export const statRepository = new StatRepository();

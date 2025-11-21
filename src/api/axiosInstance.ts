@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const axiosInstance = axios.create({
   baseURL: "https://localhost:7066/api",
-  timeout: 1000,
+  timeout: 10000,
 });
 
 const nonAuthRoutes = ["/register", "/login"];

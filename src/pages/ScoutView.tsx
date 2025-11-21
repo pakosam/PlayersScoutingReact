@@ -1,7 +1,6 @@
 import { OptionIcon } from "../icons/OptionIcon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { DeleteIcon } from "../icons/DeleteIcon";
 import "./ScoutView.css";
 import { useEffect, useState } from "react";
 import { IScouts } from "../api/apiInterface";
@@ -19,17 +18,17 @@ export const ScoutView = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-      scoutRepository
-        .getAllScouts()
-        .then((data) => {
-          setScouts(data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setError(err.message);
-          setLoading(false);
-        });
-    }, []);
+    scoutRepository
+      .getAllScouts()
+      .then((data) => {
+        setScouts(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
   const addScoutButton = () => navigate("/scouts/add-scout");
   const editIcon = async (id: number) => {
@@ -44,7 +43,7 @@ export const ScoutView = () => {
   const confirmDelete = async () => {
     if (!scoutToDelete) return;
 
-    await scoutRepository.delete(scoutToDelete.id);
+    await scoutRepository.deleteScout(scoutToDelete.id);
     setScouts((prev) => prev.filter((s) => s.id !== scoutToDelete.id));
     setScoutToDelete(null);
   };

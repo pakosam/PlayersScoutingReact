@@ -3,7 +3,7 @@ import { scoutRepository } from "../repositories/scoutRepository";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FormEvent } from "react";
-import "./AddScout.css"
+import "./AddScout.css";
 
 export const AddScout = () => {
   const [scoutData, setScoutData] = useState<IAddScout>({
@@ -16,20 +16,20 @@ export const AddScout = () => {
     playerFullName: "",
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (field: keyof IAddScout, value: string | number) => {
-      setScoutData((prev) => ({
-        ...prev,
-        [field]: value,
-      }));
-    };
+    setScoutData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
 
   const addScoutButton = async (event: FormEvent) => {
     event.preventDefault();
 
     try {
-      await scoutRepository.create(scoutData);
+      await scoutRepository.addScout(scoutData);
       navigate("/scouts");
     } catch (error) {
       console.error("Error creating scout:", error);

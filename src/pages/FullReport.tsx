@@ -12,19 +12,23 @@ import { PlayerInfos } from "../components/FullReport/PlayerInfos";
 import { StatsSection } from "../components/FullReport/StatsSection";
 import { usePlayerData } from "../api/usePlayerData";
 
-type ReportActions = "update-player" | "add-ratings" | "update-ratings" | "add-stats"
+type ReportActions =
+  | "update-player"
+  | "add-ratings"
+  | "update-ratings"
+  | "add-stats";
 
 export const FullReport = () => {
   const { playerId } = useParams<{ playerId: string }>();
-  const { player, rating, stats, setStats } = usePlayerData(playerId);
+  const { player, rating, stats, setRating, setStats } =
+    usePlayerData(playerId);
   const [showDeleteRatingModal, setShowDeleteRatingModal] = useState(false);
   const [showDeleteStatsModal, setShowDeleteStatsModal] = useState(false);
   const [statsToEdit, setStatsToEdit] = useState<IStats | null>(null);
+  const [statsIdToDelete, setStatsIdToDelete] = useState<number | null>(null);
   const navigate = useNavigate();
 
-  const navigateTo = (
-    action: ReportActions
-  ) => {
+  const navigateTo = (action: ReportActions) => {
     if (!playerId) return;
     const path = `/players/${playerId}/${action}`;
 
@@ -49,14 +53,16 @@ export const FullReport = () => {
     if (!playerId) return;
 
     try {
-      await ratingRepository.delete(Number(playerId));
+      await ratingRepository.deleteRatings(Number(playerId));
+      setRating(null);
       setShowDeleteRatingModal(false);
     } catch (err) {
       console.error("Failed to delete rating:", err);
     }
   };
 
-  const requestDeleteStats = () => {
+  const requestDeleteStats = (id: number) => {
+    setStatsIdToDelete(id);
     setShowDeleteStatsModal(true);
   };
 
@@ -64,13 +70,16 @@ export const FullReport = () => {
     setShowDeleteStatsModal(false);
   };
 
-  const confirmDeleteStats = async (id: number) => {
+  const confirmDeleteStats = async () => {
+    if (!statsIdToDelete) return;
     try {
-      await statRepository.delete(id);
+      await statRepository.deleteStats(statsIdToDelete);
       setStats(
-        (prevStats) => prevStats?.filter((stats) => stats.id !== id) || []
+        (prevStats) =>
+          prevStats?.filter((stats) => stats.id !== statsIdToDelete) || []
       );
       setShowDeleteStatsModal(false);
+      setStatsIdToDelete(null);
     } catch (err) {
       console.error("Failed to delete stats:", err);
     }
@@ -81,11 +90,13 @@ export const FullReport = () => {
 
     const updateStats = async (updatedStat: IStats) => {
       setStatsToEdit(null);
-      const player = await playerRepository.getSinglePlayer(playerId);
+      const player = await playerRepository.getSinglePlayer(Number(playerId));
       const fullName = `${player.name} ${player.surname}`;
       const updatePayload = { ...updatedStat, fullName };
       await statRepository.updateStats(updatePayload);
-      const updatedStats = await statRepository.getStatByPlayerId(playerId);
+      const updatedStats = await statRepository.getStatByPlayerId(
+        Number(playerId)
+      );
       setStats(updatedStats);
     };
 
@@ -140,7 +151,7 @@ export const FullReport = () => {
         isOpen={showDeleteStatsModal}
         title="Delete Stats"
         message={`Are you sure you want to delete this player's stats?`}
-        onConfirm={() => confirmDeleteStats(Number(playerId!))}
+        onConfirm={() => confirmDeleteStats()}
         onCancel={cancelDeleteStats}
       />
     </div>

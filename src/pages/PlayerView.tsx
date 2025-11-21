@@ -42,7 +42,7 @@ export const PlayerView = () => {
     if (!playerToDelete) return;
 
     try {
-      await playerRepository.delete(playerToDelete.id);
+      await playerRepository.deletePlayer(playerToDelete.id);
       setPlayers((prev) => prev.filter((p) => p.id !== playerToDelete.id));
       setPlayerToDelete(null);
     } catch (err) {
