@@ -9,12 +9,14 @@ import { PlayerList } from "../components/PlayerView/PlayerList";
 import { IPlayers } from "../api/apiInterface";
 import { playerRepository } from "../repositories/playerRepository";
 import { ConfirmModal } from "../components/PlayerView/ConfirmModal";
+import { LogoutModal } from "../components/LogoutModal";
 
 export const PlayerView = () => {
   const [players, setPlayers] = useState<IPlayers[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [playerToDelete, setPlayerToDelete] = useState<IPlayers | null>(null);
+  const [logoutOpen, setLogoutOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,7 +64,7 @@ export const PlayerView = () => {
     >
       <div className="header-and-options-button">
         <h1>Players Scouting</h1>
-        <OptionIcon />
+        <OptionIcon onClick={() => setLogoutOpen(true)} />
       </div>
 
       <div className="selected-option">
@@ -94,6 +96,12 @@ export const PlayerView = () => {
         message={`Are you sure you want to delete ${playerToDelete?.name} ${playerToDelete?.surname}?`}
         onConfirm={confirmDelete}
         onCancel={cancelDelete}
+      />
+
+      <LogoutModal
+        open={logoutOpen}
+        onClose={() => setLogoutOpen(false)}
+        property="Scouts"
       />
     </div>
   );

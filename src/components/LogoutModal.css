@@ -1,0 +1,103 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.open-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  background: #e5e7eb;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+.open-btn:hover {
+  background: #d1d5db;
+}
+
+.overlay {
+  animation: fadeIn 0.25s ease forwards;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal {
+  animation: scaleIn 0.25s ease forwards;
+  background: white;
+  padding: 1.5rem;
+  width: 20rem;
+  border-radius: 1rem;
+  position: relative;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0.25rem;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+.close-btn:hover {
+  background: #f3f4f6;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.property-btn {
+  width: 100%;
+  background: #b1a4a4;
+  color: white;
+  padding: 0.5rem 0;
+  border-radius: 0.75rem;
+  cursor: pointer;
+}
+
+.property-btn:hover {
+  background: #878080;
+}
+
+.logout-btn {
+  width: 100%;
+  background: #ef4444;
+  color: white;
+  padding: 0.5rem 0;
+  border-radius: 0.75rem;
+  cursor: pointer;
+}
+.logout-btn:hover {
+  background: #dc2626;
+}

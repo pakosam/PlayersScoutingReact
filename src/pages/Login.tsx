@@ -1,10 +1,13 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authRepository } from "../repositories/authRepository";
+import { useAuth } from "../components/AuthContext";
 import "./Login.css";
 
 export const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,6 +16,7 @@ export const Login = () => {
 
     try {
       await authRepository.login({ email, password });
+      login();
       navigate("/players");
     } catch (error) {
       console.error("Error registration:", error);

@@ -8,12 +8,14 @@ import { scoutRepository } from "../repositories/scoutRepository";
 import { useNavigate } from "react-router-dom";
 import { ConfirmModal } from "../components/PlayerView/ConfirmModal";
 import { ScoutList } from "../components/ScoutView/ScoutList";
+import { LogoutModal } from "../components/LogoutModal";
 
 export const ScoutView = () => {
   const [scouts, setScouts] = useState<IScouts[]>([]);
   const [scoutToDelete, setScoutToDelete] = useState<IScouts | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -60,7 +62,7 @@ export const ScoutView = () => {
     >
       <div className="header-and-options-button">
         <h1>Players Scouting</h1>
-        <OptionIcon />
+        <OptionIcon onClick={() => setLogoutOpen(true)} />
       </div>
 
       <div className="selected-option">
@@ -91,6 +93,12 @@ export const ScoutView = () => {
         message={`Are you sure you want to delete ${scoutToDelete?.name} ${scoutToDelete?.surname}?`}
         onConfirm={confirmDelete}
         onCancel={cancelDelete}
+      />
+
+      <LogoutModal
+        open={logoutOpen}
+        onClose={() => setLogoutOpen(false)}
+        property="Players"
       />
     </div>
   );
