@@ -19,10 +19,12 @@ export const Report = () => {
 
     const load = async () => {
       try {
-        const player = await playerRepository.getSinglePlayer(playerId);
+        const player = await playerRepository.getSinglePlayer(Number(playerId));
         setPlayer(player);
 
-        const rating = await ratingRepository.getRatingByPlayerId(playerId);
+        const rating = await ratingRepository.getRatingByPlayerId(
+          Number(playerId)
+        );
         setRating(rating);
       } catch (err) {
         console.error(err);

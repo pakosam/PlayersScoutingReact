@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FormEvent } from "react";
 import "./AddPlayer.css";
 import { playerRepository } from "../repositories/playerRepository";
-import { IAddPlayer } from "../api/apiInterface"; 
+import { IAddPlayer } from "../api/apiInterface";
 
 export const AddPlayer = () => {
   const [playerData, setPlayerData] = useState<IAddPlayer>({
@@ -31,7 +31,7 @@ export const AddPlayer = () => {
     event.preventDefault();
 
     try {
-      await playerRepository.create(playerData); 
+      await playerRepository.addPlayer(playerData);
       navigate("/players");
     } catch (error) {
       console.error("Error creating player:", error);

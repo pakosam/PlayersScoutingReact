@@ -1,6 +1,11 @@
-export const DeleteIcon = () => {
+interface DeleteIconProps {
+  onClick?: () => void;
+}
+
+export const DeleteIcon: React.FC<DeleteIconProps> = ({ onClick }) => {
   return (
     <svg
+      onClick={onClick}
       fill="#d3a518ff"
       version="1.1"
       id="Capa_1"

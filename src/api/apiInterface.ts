@@ -74,7 +74,7 @@ export interface IAddRatings {
 
 export interface IUpdateRatings {
   playerId: number;
-  id: number
+  id: number;
   attack: number;
   defense: number;
   tactics: number;
@@ -90,6 +90,12 @@ export interface ConfirmModalProps {
   message?: string;
   onConfirm: () => void;
   onCancel: () => void;
+}
+
+export interface AuthModalProps {
+  onClose: () => void;
+  toLogin: () => void;
+  toRegister: () => void;
 }
 
 export interface IStats {
@@ -121,4 +127,62 @@ export interface IUpdateStats {
   goals: number;
   assists: number;
   fullName: string;
+}
+
+export interface IScouts {
+  id: number;
+  image?: string;
+  name: string;
+  surname: string;
+  birthdate: string;
+  birthplace: string;
+  email: string;
+  password: string;
+  playerFullName: string;
+}
+
+export interface IScout {
+  id: number;
+  name: string;
+  surname: string;
+  birthdate: string;
+  birthplace: string;
+  email: string;
+  password: string;
+  playerFullName: string;
+}
+
+export interface IAddScout {
+  name: string;
+  surname: string;
+  birthdate: string;
+  birthplace: string;
+  email: string;
+  password: string;
+  playerFullName: string;
+}
+
+export interface IRegister {
+  name: string;
+  surname: string;
+  birthdate: string;
+  birthplace: string;
+  email: string;
+  password: string;
+}
+
+export interface ILogin {
+  email: string;
+  password: string;
+}
+
+export interface IUpdateScout {
+  id: number;
+  name: string;
+  surname: string;
+  birthdate: string;
+  birthplace: string;
+  email: string;
+  password: string;
+  playerFullName: string;
 }

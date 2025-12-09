@@ -1,6 +1,11 @@
-export const OptionIcon = () => {
+interface OptionIconProps {
+  onClick?: () => void;
+}
+
+export const OptionIcon: React.FC<OptionIconProps> = ({ onClick }) => {
   return (
     <svg
+      onClick={onClick}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 50 50"
       width="50px"

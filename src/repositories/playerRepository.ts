@@ -1,43 +1,36 @@
-import { IPlayer, IPlayers } from "../api/apiInterface";
+import {
+  IPlayer,
+  IPlayers,
+  IAddPlayer,
+  IUpdatePlayer,
+} from "../api/apiInterface";
+import { axiosInstance } from "../api/axiosInstance";
 
-const url = "https://localhost:7066/api";
-
-export const playerRepository = {
-  getAllPlayers: async (): Promise<IPlayers[]> => {
-    const response = await fetch(`${url}/Players`);
-    if (!response.ok) throw new Error("Failed to fetch players");
-    return response.json();
-  },
-
-  getSinglePlayer: async (id: string): Promise<IPlayer> => {
-    const response = await fetch(`${url}/Players/${id}`);
-    if (!response.ok) throw new Error("Failed to fetch player");
-    return response.json();
-  },
-
-  delete: async (id: number): Promise<void> => {
-    const response = await fetch(`${url}/Players?id=${id}`, { method: "DELETE" });
-    if (!response.ok) throw new Error("Failed to delete player");
-    return response.json();
-  },
-
-  create: async (player: Omit<IPlayers, "id">): Promise<IPlayers> => {
-    const response = await fetch(`${url}/Players`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(player)
-    });
-    if (!response.ok) throw new Error(`Failed to create player: ${response.status}`);
-    return response.json();
-  },
-
-  update: async (player: Omit<IPlayers, "id">): Promise<IPlayers> => {
-    const response = await fetch(`${url}/Players`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(player)
-    });
-    if (!response.ok) throw new Error(`Failed to update player: ${response.status}`);
-    return response.json();
+class PlayerRepository {
+  async getAllPlayers(): Promise<IPlayers[]> {
+    const response = await axiosInstance.get<IPlayers[]>("/Players");
+    return response.data;
   }
-};
+
+  async getSinglePlayer(id: number) {
+    const response = await axiosInstance.get<IPlayer>(`/Players/${id}`);
+    return response.data;
+  }
+
+  async deletePlayer(id: number): Promise<void> {
+    const response = await axiosInstance.delete<void>(`/Players?id=${id}`);
+    return response.data;
+  }
+
+  async addPlayer(credentials: IAddPlayer) {
+    const response = await axiosInstance.post("/Players", credentials);
+    return response.data;
+  }
+
+  async updatePlayer(credentials: IUpdatePlayer) {
+    const response = await axiosInstance.put("/Players", credentials);
+    return response.data;
+  }
+}
+
+export const playerRepository = new PlayerRepository();
