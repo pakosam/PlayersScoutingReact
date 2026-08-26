@@ -25,6 +25,7 @@ export const Report = () => {
         const rating = await ratingRepository.getRatingByPlayerId(
           Number(playerId)
         );
+        console.log(rating);
         setRating(rating);
       } catch (err) {
         console.error(err);

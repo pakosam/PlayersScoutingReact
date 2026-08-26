@@ -15,7 +15,7 @@ class AuthRepository {
       "/Authorization/login",
       credentials
     );
-    localStorage.setItem("loginData", response.data);
+    localStorage.setItem("loginData", response.data.token);
 
     return response.data;
   }

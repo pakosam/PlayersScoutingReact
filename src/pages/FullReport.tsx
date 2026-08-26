@@ -136,9 +136,6 @@ export const FullReport = () => {
           onDeleteStat={requestDeleteStats}
         />
         {editStatsModal()}
-        <div>
-          <a>Report by</a>
-        </div>
       </div>
       <ConfirmModal
         isOpen={showDeleteRatingModal}

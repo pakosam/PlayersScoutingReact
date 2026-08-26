@@ -83,7 +83,7 @@ export const Register = () => {
 
             <label>Password</label>
             <input
-              type="text"
+              type="password"
               value={registerData.password}
               onChange={(e) => handleChange("password", e.target.value)}
               required

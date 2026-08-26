@@ -4,7 +4,7 @@ import { axiosInstance } from "../api/axiosInstance";
 class RatingRepository {
   async getRatingByPlayerId(playerId: number): Promise<IRatings> {
     const response = await axiosInstance.get(`/Ratings/player/${playerId}`);
-    return response.data[0];
+    return response.data;
   }
 
   async addRatings(credentials: IAddRatings): Promise<IRatings> {
