@@ -70,11 +70,6 @@ export const ScoutView = () => {
       </div>
 
       <div className="main-content">
-        <div className="btn-container">
-          <button className="add-scout-btn" onClick={addScoutButton}>
-            <FontAwesomeIcon icon={faPlus} />
-          </button>
-        </div>
         {loading && <p>Loading...</p>}
         {error && <p style={{ color: "red" }}>{error}</p>}
 

@@ -1,6 +1,6 @@
 import { IStats } from "../../api/apiInterface";
 import "./EditStatsModal.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface EditStatsModalProps {
   stats: IStats;
@@ -13,10 +13,20 @@ export const EditStatsModal = ({
   onSave,
   onCancel,
 }: EditStatsModalProps) => {
-  const [statsToEdit, setStatsToEdit] = useState(stats);
+  const [statsToEdit, setStatsToEdit] = useState<IStats>(stats);
+
+  useEffect(() => {
+    setStatsToEdit(stats);
+  }, [stats]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!statsToEdit || statsToEdit.id === 0) {
+      console.error("Invalid stat id:", statsToEdit);
+      return;
+    }
+
     onSave(statsToEdit);
   };
 
@@ -67,7 +77,10 @@ export const EditStatsModal = ({
             type="number"
             value={statsToEdit.assists}
             onChange={(e) =>
-              setStatsToEdit({ ...statsToEdit, assists: Number(e.target.value) })
+              setStatsToEdit({
+                ...statsToEdit,
+                assists: Number(e.target.value),
+              })
             }
           />
 

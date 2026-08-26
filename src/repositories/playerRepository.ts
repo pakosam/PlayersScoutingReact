@@ -17,6 +17,13 @@ class PlayerRepository {
     return response.data;
   }
 
+  async getPlayersByScoutId(scoutId: number) {
+    const response = await axiosInstance.get<IPlayers[]>(
+      `/Players/scout/${scoutId}`
+    );
+    return response.data;
+  }
+
   async deletePlayer(id: number): Promise<void> {
     const response = await axiosInstance.delete<void>(`/Players?id=${id}`);
     return response.data;
